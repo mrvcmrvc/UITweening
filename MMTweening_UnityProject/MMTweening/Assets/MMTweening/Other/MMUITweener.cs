@@ -410,7 +410,7 @@ public abstract class MMUITweener : MonoBehaviour
     {
         _curDuration += _directionSign * (IgnoreTimeScale ? Time.fixedDeltaTime : Time.fixedDeltaTime);
 
-        if (((IsForward && CurDuration < Duration / 2f) || (IsReverse && CurDuration > Duration / 2f)) && !_onHalfWayFired)
+        if (((IsForward && CurDuration > Duration / 2f) || (IsReverse && CurDuration < Duration / 2f)) && !_onHalfWayFired)
         {
             _onHalfWayFired = true;
             FireOnHalfWay();
@@ -502,9 +502,9 @@ public abstract class MMUITweener : MonoBehaviour
                 {
                     _clampedValue = 0f;
 
-                    SetPlayingDirection(true);
-
                     InitValueToFROM();
+
+                    SetPlayingDirection(true);
                 }
                 //else if (_clampedValue <= 0f && IsReverse)
                 //{

@@ -305,6 +305,7 @@ public abstract class MMUITweener : MonoBehaviour
         persistent_onUpdate = new List<TweenCallback>();
         persistent_onPause = new List<TweenCallback>();
         persistent_onResume = new List<TweenCallback>();
+        persistent_onHalfWay = new List<TweenCallback>();
 
         nonPersistent_onKill = new List<TweenCallback>();
         nonPersistent_onFinish = new List<TweenCallback>();
@@ -312,6 +313,7 @@ public abstract class MMUITweener : MonoBehaviour
         nonPersistent_onUpdate = new List<TweenCallback>();
         nonPersistent_onPause = new List<TweenCallback>();
         nonPersistent_onResume = new List<TweenCallback>();
+        nonPersistent_onHalfWay = new List<TweenCallback>();
     }
 
     public void PlayForward()
@@ -408,8 +410,12 @@ public abstract class MMUITweener : MonoBehaviour
     {
         _curDuration += _directionSign * (IgnoreTimeScale ? Time.fixedDeltaTime : Time.fixedDeltaTime);
 
-        if (((IsForward && CurDuration < Duration / 2f) || (IsReverse && CurDuration > Duration / 2f)) && !_onHalfWayFired)
+        if (((IsForward && CurDuration > Duration / 2f) || (IsReverse && CurDuration < Duration / 2f)) && !_onHalfWayFired)
+        {
+            _onHalfWayFired = true;
             FireOnHalfWay();
+        }
+
 
         if (_curDuration > Duration)
             _curDuration = Duration;
@@ -496,9 +502,9 @@ public abstract class MMUITweener : MonoBehaviour
                 {
                     _clampedValue = 0f;
 
-                    SetPlayingDirection(true);
-
                     InitValueToFROM();
+
+                    SetPlayingDirection(true);
                 }
                 //else if (_clampedValue <= 0f && IsReverse)
                 //{

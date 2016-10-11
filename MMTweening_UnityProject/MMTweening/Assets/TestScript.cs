@@ -7,8 +7,6 @@ public class TestScript : MonoBehaviour
     void Awake()
     {
         _tweener = gameObject.GetComponent<MMUITweener>();
-
-        _tweener.AddOnHalfWay(() => Debug.Log("HalfWay"));
     }
 
     public void KillTween()
