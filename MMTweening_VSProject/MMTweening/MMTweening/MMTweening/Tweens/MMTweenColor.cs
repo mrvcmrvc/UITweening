@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
 /// <summary>
 /// Does NOT work with MMTweenAlpha.
 /// </summary>
@@ -12,13 +11,13 @@ public class MMTweenColor : MMUITweener
 
     public Color Value { get; private set; }
 
-    Image myImage;
+    Graphic myImage;
 
     protected override void Wake()
     {
-        myImage = gameObject.GetComponent<Image>();
+        myImage = gameObject.GetComponent<Graphic>();
 
-        InitValueToFROM();
+        base.Wake();
     }
 
     protected override void SetValue(float clampedValue)
@@ -75,25 +74,25 @@ public class MMTweenColor : MMUITweener
     [ContextMenu("Set FROM")]
     void SetFrom()
     {
-        From = GetComponent<Image>().color;
+        From = GetComponent<Graphic>().color;
     }
 
     [ContextMenu("Set TO")]
     void SetTo()
     {
-        To = GetComponent<Image>().color;
+        To = GetComponent<Graphic>().color;
     }
 
     [ContextMenu("Assume FROM")]
     void AssumeFrom()
     {
-        GetComponent<Image>().color = From;
+        GetComponent<Graphic>().color = From;
     }
 
     [ContextMenu("Assume TO")]
     void AssumeTo()
     {
-        GetComponent<Image>().color = To;
+        GetComponent<Graphic>().color = To;
     }
 
     public override void InitValueToFROM()

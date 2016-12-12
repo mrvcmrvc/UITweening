@@ -42,9 +42,9 @@ public abstract class MMUITweener : MonoBehaviour
     [HideInInspector]
     public bool Delay;
     [HideInInspector]
-    public bool IsForward;
+    public bool CanPlayForward;
     [HideInInspector]
-    public bool IsReverse;
+    public bool CanPlayReverse;
     [HideInInspector]
     public bool IsPaused;
     [HideInInspector]
@@ -275,8 +275,8 @@ public abstract class MMUITweener : MonoBehaviour
 
         ResetEventDelegates();
 
-        IsForward = false;
-        IsReverse = true;
+        CanPlayForward = false;
+        CanPlayReverse = true;
 
         _onHalfWayFired = false;
 
@@ -318,7 +318,7 @@ public abstract class MMUITweener : MonoBehaviour
 
     public void PlayForward()
     {
-        if (IsForward)
+        if (CanPlayForward)
             return;
 
         if (IsPlaying || IsPaused)
@@ -339,7 +339,7 @@ public abstract class MMUITweener : MonoBehaviour
 
     public void PlayReverse()
     {
-        if (IsReverse)
+        if (CanPlayReverse)
             return;
 
         if(IsPlaying || IsPaused)
@@ -408,9 +408,9 @@ public abstract class MMUITweener : MonoBehaviour
 
     void UpdateCurDuration()
     {
-        _curDuration += _directionSign * (IgnoreTimeScale ? Time.fixedDeltaTime : Time.fixedDeltaTime);
+        _curDuration += _directionSign * (IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime);
 
-        if (((IsForward && CurDuration > Duration / 2f) || (IsReverse && CurDuration < Duration / 2f)) && !_onHalfWayFired)
+        if (((CanPlayForward && CurDuration > Duration / 2f) || (CanPlayReverse && CurDuration < Duration / 2f)) && !_onHalfWayFired)
         {
             _onHalfWayFired = true;
             FireOnHalfWay();
@@ -498,7 +498,7 @@ public abstract class MMUITweener : MonoBehaviour
                 }
                 break;
             case MMTweeningLoopTypeEnum.Loop:
-                if (_clampedValue >= 1f)
+                if (_clampedValue > 1f)
                 {
                     _clampedValue = 0f;
 
@@ -520,8 +520,8 @@ public abstract class MMUITweener : MonoBehaviour
 
     void SetPlayingDirection(bool forward)
     {
-        IsForward = forward;
-        IsReverse = !forward;
+        CanPlayForward = forward;
+        CanPlayReverse = !forward;
 
         if (forward)
             _directionSign = 1;
@@ -536,7 +536,7 @@ public abstract class MMUITweener : MonoBehaviour
     {
         if (LoopType == MMTweeningLoopTypeEnum.Once)
         {
-            if ((_clampedValue == 0f && IsReverse) || (_clampedValue == 1f && IsForward))
+            if ((_clampedValue == 0f && CanPlayReverse) || (_clampedValue == 1f && CanPlayForward))
                 FinishTween();
         }
     }
@@ -584,9 +584,9 @@ public abstract class MMUITweener : MonoBehaviour
     /// </summary>
     public void FinishTween()
     {
-        if (IsForward)
+        if (CanPlayForward)
             _clampedValue = 1f;
-        else if (IsReverse)
+        else if (CanPlayReverse)
             _clampedValue = 0f;
 
         SetValue(_clampedValue);
@@ -604,8 +604,8 @@ public abstract class MMUITweener : MonoBehaviour
 
     public virtual void InitValueToFROM()
     {
-        IsForward = false;
-        IsReverse = true;
+        CanPlayForward = false;
+        CanPlayReverse = true;
 
         _curDuration = 0f;
 
@@ -614,16 +614,20 @@ public abstract class MMUITweener : MonoBehaviour
 
     public virtual void InitValueToTO()
     {
-        IsForward = true;
-        IsReverse = false;
+        CanPlayForward = true;
+        CanPlayReverse = false;
 
         _curDuration = Duration;
 
         PlayAnim();
     }
 
+    protected virtual void Wake()
+    {
+        InitValueToFROM();
+    }
+
     #region Abstract Methods
-    protected abstract void Wake();
     protected abstract void SetValue(float clampedValue);
     protected abstract void PlayAnim();
     protected abstract void Finish();

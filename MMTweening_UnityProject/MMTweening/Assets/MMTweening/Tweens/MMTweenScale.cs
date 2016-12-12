@@ -16,7 +16,7 @@ public class MMTweenScale : MMUITweener
     {
         myTransform = gameObject.GetComponent<RectTransform>();
 
-        InitValueToFROM();
+        base.Wake();
     }
 
     protected override void SetValue(float clampedValue)

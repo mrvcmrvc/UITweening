@@ -7,6 +7,13 @@ public class TestScript : MonoBehaviour
     void Awake()
     {
         _tweener = gameObject.GetComponent<MMUITweener>();
+
+        Application.targetFrameRate = 120;
+    }
+
+    public void SetTargetFrameRate(int rate)
+    {
+        Application.targetFrameRate = rate;
     }
 
     public void KillTween()

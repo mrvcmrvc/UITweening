@@ -20,7 +20,7 @@ public class MMTweenPosition : MMUITweener
         else
             myTransform = gameObject.GetComponent<RectTransform>();
 
-        InitValueToFROM();
+        base.Wake();
     }
 
     void CheckForRigidbodyAndCollider()
