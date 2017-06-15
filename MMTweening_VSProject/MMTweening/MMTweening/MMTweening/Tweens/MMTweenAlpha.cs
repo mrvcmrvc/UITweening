@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,10 +13,12 @@ public class MMTweenAlpha : MMUITweener
     public float Value { get; private set; }
 
     Graphic myImage;
+    CanvasGroup myCanvasGroup;
 
     protected override void Wake()
     {
         myImage = gameObject.GetComponent<Graphic>();
+        myCanvasGroup = gameObject.GetComponent<CanvasGroup>();
 
         base.Wake();
     }
@@ -33,6 +36,13 @@ public class MMTweenAlpha : MMUITweener
 
     protected override void PlayAnim()
     {
+        UpdateImage();
+
+        UpdateCanvasGroup();
+    }
+
+    void UpdateImage()
+    {
         if (myImage == null)
             return;
 
@@ -40,6 +50,14 @@ public class MMTweenAlpha : MMUITweener
         color.a = Value;
 
         myImage.color = color;
+    }
+
+    void UpdateCanvasGroup()
+    {
+        if (myCanvasGroup == null)
+            return;
+
+        myCanvasGroup.alpha = Value;
     }
 
     protected override void Finish()
@@ -54,31 +72,47 @@ public class MMTweenAlpha : MMUITweener
     [ContextMenu("Set FROM")]
     void SetFrom()
     {
-        From = GetComponent<Graphic>().color.a;
+        if(GetComponent<Graphic>() != null)
+            From = GetComponent<Graphic>().color.a;
+        else if (GetComponent<CanvasGroup>() != null)
+            From = GetComponent<CanvasGroup>().alpha;
     }
 
     [ContextMenu("Set TO")]
     void SetTo()
     {
-        To = GetComponent<Graphic>().color.a;
+        if (GetComponent<Graphic>() != null)
+            To = GetComponent<Graphic>().color.a;
+        else if (GetComponent<CanvasGroup>() != null)
+            To = GetComponent<CanvasGroup>().alpha;
     }
 
     [ContextMenu("Assume FROM")]
     void AssumeFrom()
     {
-        Color color = GetComponent<Graphic>().color;
-        color.a = From;
+        if(GetComponent<Graphic>() != null)
+        {
+            Color color = GetComponent<Graphic>().color;
+            color.a = From;
 
-        GetComponent<Graphic>().color = color;
+            GetComponent<Graphic>().color = color;
+        }
+        else if(GetComponent<CanvasGroup>() != null)
+            GetComponent<CanvasGroup>().alpha = From;
     }
 
     [ContextMenu("Assume TO")]
     void AssumeTo()
     {
-        Color color = GetComponent<Graphic>().color;
-        color.a = To;
+        if (GetComponent<Graphic>() != null)
+        {
+            Color color = GetComponent<Graphic>().color;
+            color.a = To;
 
-        GetComponent<Graphic>().color = color;
+            GetComponent<Graphic>().color = color;
+        }
+        else if (GetComponent<CanvasGroup>() != null)
+            GetComponent<CanvasGroup>().alpha = To;
     }
 
     public override void InitValueToFROM()

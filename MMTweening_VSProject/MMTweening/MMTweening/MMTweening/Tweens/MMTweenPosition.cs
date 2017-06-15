@@ -5,7 +5,7 @@ using UnityEngine;
 public class MMTweenPosition : MMUITweener
 {
     public Vector3 From, To;
-    public bool UseWorldPosition, UseRigidbody;
+    public bool UseRigidbody;
 
     public Vector3 Value { get; private set; }
 
@@ -15,7 +15,7 @@ public class MMTweenPosition : MMUITweener
 
     protected override void Wake()
     {
-        if (UseWorldPosition && UseRigidbody)
+        if (UseRigidbody)
             CheckForRigidbodyAndCollider();
         else
             myTransform = gameObject.GetComponent<RectTransform>();
@@ -40,28 +40,32 @@ public class MMTweenPosition : MMUITweener
 
     protected override void SetValue(float clampedValue)
     {
-        Vector3 diff = To - From;
-        Vector3 delta = diff * clampedValue;
+        if(Ease == MMTweeningEaseEnum.Shake/* || Ease == MMTweeningEaseEnum.Punch*/)
+        {
+            Vector2 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
 
-        Value = From + delta;
+            Value = GetComponent<RectTransform>().anchoredPosition + delta;
+        }
+        else
+        {
+            Vector3 diff = To - From;
+            Vector3 delta = diff * clampedValue;
+
+            Value = From + delta;
+        }
     }
 
     protected override void PlayAnim()
     {
-        if (UseWorldPosition)
+        if (UseRigidbody)
         {
-            if (UseRigidbody)
-            {
-                if (myRigidbody != null)
-                    myRigidbody.position = Value;
-                else if(myRigidbody2D != null)
-                    myRigidbody2D.position = Value;
-            }
-            else if(myTransform != null)
-                myTransform.position = Value;
+            if (myRigidbody != null)
+                myRigidbody.position = Value;
+            else if(myRigidbody2D != null)
+                myRigidbody2D.position = Value;
         }
         else if(myTransform != null)
-            myTransform.localPosition = Value;
+            myTransform.anchoredPosition = Value;
     }
 
     protected override void Finish()
@@ -76,37 +80,25 @@ public class MMTweenPosition : MMUITweener
     [ContextMenu("Set FROM")]
     void SetFrom()
     {
-        if (UseWorldPosition)
-            From = GetComponent<RectTransform>().position;
-        else
-            From = GetComponent<RectTransform>().localPosition;
+        From = GetComponent<RectTransform>().anchoredPosition;
     }
 
     [ContextMenu("Set TO")]
     void SetTo()
     {
-        if (UseWorldPosition)
-            To = GetComponent<RectTransform>().position;
-        else
-            To = GetComponent<RectTransform>().localPosition;
+        To = GetComponent<RectTransform>().anchoredPosition;
     }
 
     [ContextMenu("Assume FROM")]
     void AssumeFrom()
     {
-        if (UseWorldPosition)
-            GetComponent<RectTransform>().position= From;
-        else
-            GetComponent<RectTransform>().localPosition = From;
+        GetComponent<RectTransform>().anchoredPosition = From;
     }
 
     [ContextMenu("Assume TO")]
     void AssumeTo()
     {
-        if (UseWorldPosition)
-            GetComponent<RectTransform>().position = To;
-        else
-            GetComponent<RectTransform>().localPosition = To;
+        GetComponent<RectTransform>().anchoredPosition = To;
     }
 
     public override void InitValueToFROM()

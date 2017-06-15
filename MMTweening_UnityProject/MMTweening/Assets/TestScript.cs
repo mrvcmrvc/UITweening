@@ -55,4 +55,9 @@ public class TestScript : MonoBehaviour
     {
         _tweener.InitValueToTO();
     }
+
+    public void SetTimeScaleTo(float newTimeScale)
+    {
+        Time.timeScale = newTimeScale;
+    }
 }

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(MMTweenColor))]
-public class MMTweenColorInspector : Editor
+public class MMTweenColorInspector : InspectorBase
 {
     MMTweenColor myTarget;
 
     void OnEnable()
     {
         myTarget = (MMTweenColor)target;
+
+        Enable(myTarget);
     }
 
     public override void OnInspectorGUI()
@@ -19,20 +22,22 @@ public class MMTweenColorInspector : Editor
 
         myTarget.LoopType = (MMTweeningLoopTypeEnum)EditorGUILayout.EnumPopup("Loop Type", myTarget.LoopType);
 
-        myTarget.Ease = (MMTweeningEaseEnum)EditorGUILayout.EnumPopup("Ease", myTarget.Ease);
-        if (myTarget.Ease == MMTweeningEaseEnum.Curve)
-            myTarget.AnimationCurve = EditorGUILayout.CurveField(myTarget.AnimationCurve);
+        DrawEaseField();
+
+        if (ease == MMTweeningEaseEnum.Curve)
+            DrawAnimCurveField();
 
         myTarget.Delay = EditorGUILayout.Toggle("Delay", myTarget.Delay);
         if (myTarget.Delay)
             myTarget.DelayDuration = EditorGUILayout.FloatField("Delay Duration", myTarget.DelayDuration);
 
-        myTarget.Duration = EditorGUILayout.FloatField("Duration", myTarget.Duration);
+        DrawDurationField();
+
         myTarget.IgnoreTimeScale = EditorGUILayout.Toggle("Ignore TimeScale", myTarget.IgnoreTimeScale);
 
         myTarget.PlayAutomatically = EditorGUILayout.Toggle("Play Automatically", myTarget.PlayAutomatically);
 
-        if (EditorGUI.EndChangeCheck() || GUI.changed)
-            EditorUtility.SetDirty(myTarget);
+        if (!Application.isPlaying && (EditorGUI.EndChangeCheck() || GUI.changed))
+            EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
     }
 }

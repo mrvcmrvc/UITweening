@@ -19,10 +19,19 @@ public class MMTweenSize : MMUITweener
 
     protected override void SetValue(float clampedValue)
     {
-        Vector2 diff = To - From;
-        Vector2 delta = diff * clampedValue;
+        if (Ease == MMTweeningEaseEnum.Shake/* || Ease == MMTweeningEaseEnum.Punch*/)
+        {
+            Vector2 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
 
-        Value = From + delta;
+            Value = GetComponent<RectTransform>().sizeDelta + delta;
+        }
+        else
+        {
+            Vector2 diff = To - From;
+            Vector2 delta = diff * clampedValue;
+
+            Value = From + delta;
+        }
     }
 
     protected override void PlayAnim()
