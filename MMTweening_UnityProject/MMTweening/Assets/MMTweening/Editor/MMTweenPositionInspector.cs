@@ -37,6 +37,8 @@ public class MMTweenPositionInspector : InspectorBase
         if (myTarget.Delay)
             myTarget.DelayDuration = EditorGUILayout.FloatField("Delay Duration", myTarget.DelayDuration);
 
+        InitOnAwakeField();
+
         if (/*myTarget.Ease == MMTweeningEaseEnum.Punch || */myTarget.Ease == MMTweeningEaseEnum.Shake)
             myTarget.SetDuration(0.02f);
         else

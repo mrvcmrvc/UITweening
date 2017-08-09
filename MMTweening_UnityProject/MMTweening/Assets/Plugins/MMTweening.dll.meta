@@ -23,8 +23,12 @@ PluginImporter:
           Exclude OSXIntel: 1
           Exclude OSXIntel64: 1
           Exclude OSXUniversal: 1
+          Exclude SamsungTV: 1
+          Exclude Tizen: 1
+          Exclude WebGL: 1
           Exclude Win: 1
           Exclude Win64: 1
+          Exclude WindowsStoreApps: 1
           Exclude iOS: 1
     data:
       first:
@@ -72,6 +76,13 @@ PluginImporter:
           CPU: AnyCPU
     data:
       first:
+        Samsung TV: SamsungTV
+      second:
+        enabled: 0
+        settings:
+          STV_MODEL: STANDARD_15
+    data:
+      first:
         Standalone: Linux
       second:
         enabled: 0
@@ -84,6 +95,13 @@ PluginImporter:
         enabled: 0
         settings:
           CPU: x86_64
+    data:
+      first:
+        Standalone: LinuxUniversal
+      second:
+        enabled: 0
+        settings:
+          CPU: None
     data:
       first:
         Standalone: OSXIntel
@@ -100,6 +118,13 @@ PluginImporter:
           CPU: AnyCPU
     data:
       first:
+        Standalone: OSXUniversal
+      second:
+        enabled: 0
+        settings:
+          CPU: None
+    data:
+      first:
         Standalone: Win
       second:
         enabled: 0
@@ -114,11 +139,27 @@ PluginImporter:
           CPU: AnyCPU
     data:
       first:
+        Tizen: Tizen
+      second:
+        enabled: 0
+        settings: {}
+    data:
+      first:
+        WebGL: WebGL
+      second:
+        enabled: 0
+        settings: {}
+    data:
+      first:
         Windows Store Apps: WindowsStoreApps
       second:
         enabled: 0
         settings:
           CPU: AnyCPU
+          DontProcess: False
+          PlaceholderPath: 
+          SDK: AnySDK
+          ScriptingBackend: AnyScriptingBackend
     data:
       first:
         iPhone: iOS

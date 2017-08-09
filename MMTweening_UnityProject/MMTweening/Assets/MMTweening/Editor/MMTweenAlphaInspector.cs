@@ -32,6 +32,8 @@ public class MMTweenAlphaInspector : InspectorBase
         if (myTarget.Delay)
             myTarget.DelayDuration = EditorGUILayout.FloatField("Delay Duration", myTarget.DelayDuration);
 
+        InitOnAwakeField();
+
         DrawDurationField();
 
         myTarget.IgnoreTimeScale = EditorGUILayout.Toggle("Ignore TimeScale", myTarget.IgnoreTimeScale);
@@ -40,5 +42,7 @@ public class MMTweenAlphaInspector : InspectorBase
 
         if (!Application.isPlaying && (EditorGUI.EndChangeCheck() || GUI.changed))
             EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+
+        base.OnInspectorGUI();
     }
 }

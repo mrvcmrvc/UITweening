@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -62,6 +61,8 @@ public abstract class MMUITweener : MonoBehaviour
     [HideInInspector]
     public MMTweeningLoopTypeEnum LoopType;
     [HideInInspector]
+    public bool InitOnAwake;
+    [HideInInspector]
     public AnimationCurve CustomAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
     [HideInInspector]
     public AnimationCurve PunchAnimationCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(0.112586f, 0.9976035f), new Keyframe(0.3120486f, -0.1720615f), new Keyframe(0.4316337f, 0.07030682f), new Keyframe(0.5524869f, -0.03141804f), new Keyframe(0.6549395f, 0.003909959f), new Keyframe(0.770987f, -0.009817753f), new Keyframe(0.8838775f, 0.001939224f), new Keyframe(1.0f, 0.0f));
@@ -76,9 +77,9 @@ public abstract class MMUITweener : MonoBehaviour
     [HideInInspector]
     public bool CanPlayReverse;
     [HideInInspector]
-    public bool IsPaused;
+    public bool IsPaused = false;
     [HideInInspector]
-    public bool IsPlaying;
+    public bool IsPlaying = false;
     [HideInInspector]
     public float DelayDuration;
     [HideInInspector]
@@ -93,15 +94,20 @@ public abstract class MMUITweener : MonoBehaviour
     public MMTweeningDirection Direction { get; private set; }
     public float CurDuration { get; private set; }
 
-    float _clampedValue, _minClampedValue, _maxClampedValue, _enableTime;
-    bool _firstEnable, _enabled, _onHalfWayFired;
+    float _clampedValue, _minClampedValue, _maxClampedValue, _enableTime = 0f;
+    bool _firstEnable = true, _enabled = false, _onHalfWayFired = false;
     #endregion
 
     #region Events
     public delegate void TweenCallback();
 
-    List<TweenCallback> persistent_onKill, persistent_onFinish, persistent_onStart, persistent_onUpdate, persistent_onPause, persistent_onResume, persistent_onHalfWay;
-    List<TweenCallback> nonPersistent_onKill, nonPersistent_onFinish, nonPersistent_onStart, nonPersistent_onUpdate,nonPersistent_onPause, nonPersistent_onResume, nonPersistent_onHalfWay;
+    List<TweenCallback> persistent_onKill = new List<TweenCallback>(), persistent_onFinish = new List<TweenCallback>(),
+        persistent_onStart = new List<TweenCallback>(), persistent_onUpdate = new List<TweenCallback>(),
+        persistent_onPause = new List<TweenCallback>(), persistent_onResume = new List<TweenCallback>(), persistent_onHalfWay = new List<TweenCallback>();
+
+    List<TweenCallback> nonPersistent_onKill = new List<TweenCallback>(), nonPersistent_onFinish = new List<TweenCallback>(),
+        nonPersistent_onStart = new List<TweenCallback>(), nonPersistent_onUpdate = new List<TweenCallback>(),
+        nonPersistent_onPause = new List<TweenCallback>(), nonPersistent_onResume = new List<TweenCallback>(), nonPersistent_onHalfWay = new List<TweenCallback>();
 
     #region Callback Functions
     /// <summary>
@@ -306,17 +312,7 @@ public abstract class MMUITweener : MonoBehaviour
             Debug.LogWarning("Tweener duration of " + gameObject.name + " is equal or below 0, setting it to 0.");
             SetDuration(0f);
         }
-
-        ResetEventDelegates();
-
-        _onHalfWayFired = false;
-
-        IsPaused = false;
-        IsPlaying = false;
-
-        CloseUpdate();
-        ResetForFirstEnable();
-
+        
         Wake();
     }
 
@@ -381,6 +377,11 @@ public abstract class MMUITweener : MonoBehaviour
         CustomAnimationCurve = curve;
 
         SetDuration(Duration);
+    }
+
+    public void SetInitOnAwake(bool initOnAwake)
+    {
+        InitOnAwake = initOnAwake;
     }
 
     public void PlayForward()
@@ -798,7 +799,8 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected virtual void Wake()
     {
-        InitValueToFROM();
+        if(InitOnAwake)
+            InitValueToFROM();
     }
 
     #region Abstract Methods

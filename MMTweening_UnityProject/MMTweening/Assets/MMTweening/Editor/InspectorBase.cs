@@ -6,6 +6,7 @@ public class InspectorBase : Editor
     protected float duration;
     protected MMTweeningEaseEnum ease;
     protected AnimationCurve animCurve;
+    protected bool initOnAwake;
 
     MMUITweener _tweenerBase;
 
@@ -16,6 +17,7 @@ public class InspectorBase : Editor
         animCurve = tweenerBase.CustomAnimationCurve;
         ease = tweenerBase.Ease;
         duration = tweenerBase.Duration;
+        initOnAwake = tweenerBase.InitOnAwake;
     }
 
     protected void DrawEaseField()
@@ -40,6 +42,16 @@ public class InspectorBase : Editor
 
         if (EditorGUI.EndChangeCheck())
             _tweenerBase.SetAnimationCurve(animCurve);
+    }
+
+    protected void InitOnAwakeField()
+    {
+        EditorGUI.BeginChangeCheck();
+
+        initOnAwake = EditorGUILayout.Toggle("Init On Awake", initOnAwake);
+
+        if (EditorGUI.EndChangeCheck())
+            _tweenerBase.SetInitOnAwake(initOnAwake);
     }
 
     protected void DrawDurationField()

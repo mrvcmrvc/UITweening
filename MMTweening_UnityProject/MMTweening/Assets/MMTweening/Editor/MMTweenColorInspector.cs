@@ -31,6 +31,8 @@ public class MMTweenColorInspector : InspectorBase
         if (myTarget.Delay)
             myTarget.DelayDuration = EditorGUILayout.FloatField("Delay Duration", myTarget.DelayDuration);
 
+        InitOnAwakeField();
+
         DrawDurationField();
 
         myTarget.IgnoreTimeScale = EditorGUILayout.Toggle("Ignore TimeScale", myTarget.IgnoreTimeScale);
