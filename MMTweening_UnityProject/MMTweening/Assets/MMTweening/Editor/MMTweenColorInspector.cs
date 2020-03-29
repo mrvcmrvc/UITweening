@@ -1,45 +1,32 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
+﻿using UnityEditor;
 
 [CustomEditor(typeof(MMTweenColor))]
-public class MMTweenColorInspector : InspectorBase
+public class MMTweenColorInspector : InspectorBase<MMTweenColor>
 {
-    MMTweenColor myTarget;
-
-    void OnEnable()
-    {
-        myTarget = (MMTweenColor)target;
-
-        Enable(myTarget);
-    }
-
     public override void OnInspectorGUI()
     {
-        EditorGUI.BeginChangeCheck();
+        serializedObject.Update();
 
         DrawDefaultInspector();
 
-        myTarget.LoopType = (MMTweeningLoopTypeEnum)EditorGUILayout.EnumPopup("Loop Type", myTarget.LoopType);
+        DrawLoopTypeProperty();
 
-        DrawEaseField();
+        DrawEaseProperty();
 
-        if (ease == MMTweeningEaseEnum.Curve)
-            DrawAnimCurveField();
+        if (_myTarget.Ease == MMTweeningEaseEnum.Curve)
+            DrawAnimCurveProperty();
 
-        myTarget.Delay = EditorGUILayout.Toggle("Delay", myTarget.Delay);
-        if (myTarget.Delay)
-            myTarget.DelayDuration = EditorGUILayout.FloatField("Delay Duration", myTarget.DelayDuration);
+        DrawIsDelayProperty();
 
-        InitOnAwakeField();
+        InitOnAwakeProperty();
 
-        DrawDurationField();
+        DrawDurationProperty();
 
-        myTarget.IgnoreTimeScale = EditorGUILayout.Toggle("Ignore TimeScale", myTarget.IgnoreTimeScale);
+        DrawIgnoreTimeScaleProperty();
 
-        myTarget.PlayAutomatically = EditorGUILayout.Toggle("Play Automatically", myTarget.PlayAutomatically);
+        DrawPlayAutomaticallyProperty();
 
-        if (!Application.isPlaying && (EditorGUI.EndChangeCheck() || GUI.changed))
-            EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+        serializedObject.ApplyModifiedProperties();
+        EditorApplication.update.Invoke();
     }
 }

@@ -56,40 +56,23 @@ public enum MMTweeningDirection
 public abstract class MMUITweener : MonoBehaviour
 {
     #region CommonVariables
-    [HideInInspector]
-    public MMTweeningEaseEnum Ease;
-    [HideInInspector]
-    public MMTweeningLoopTypeEnum LoopType;
-    [HideInInspector]
-    public bool InitOnAwake;
-    [HideInInspector]
-    public AnimationCurve CustomAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
-    [HideInInspector]
-    public AnimationCurve PunchAnimationCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(0.112586f, 0.9976035f), new Keyframe(0.3120486f, -0.1720615f), new Keyframe(0.4316337f, 0.07030682f), new Keyframe(0.5524869f, -0.03141804f), new Keyframe(0.6549395f, 0.003909959f), new Keyframe(0.770987f, -0.009817753f), new Keyframe(0.8838775f, 0.001939224f), new Keyframe(1.0f, 0.0f));
-    [HideInInspector]
-    public AnimationCurve ShakeAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.25f, 1f), new Keyframe(0.75f, -1f), new Keyframe(1f, 0f));
-    [HideInInspector]
-    public bool PlayAutomatically;
-    [HideInInspector]
-    public bool Delay;
-    [HideInInspector]
-    public bool CanPlayForward;
-    [HideInInspector]
-    public bool CanPlayReverse;
-    [HideInInspector]
-    public bool IsPaused = false;
-    [HideInInspector]
-    public bool IsPlaying = false;
-    [HideInInspector]
-    public float DelayDuration;
-    [HideInInspector]
-    public bool IgnoreTimeScale = true;
-    [HideInInspector]
-    public float Duration;
-    [HideInInspector]
-    public float ShakePunchAmount;
-    [HideInInspector]
-    public Vector3 ShakePunchDirection;
+    [HideInInspector] public MMTweeningEaseEnum Ease;
+    [HideInInspector] public MMTweeningLoopTypeEnum LoopType;
+    [HideInInspector] public bool InitOnAwake;
+    [HideInInspector] public AnimationCurve CustomAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
+    [HideInInspector] public AnimationCurve PunchAnimationCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(0.112586f, 0.9976035f), new Keyframe(0.3120486f, -0.1720615f), new Keyframe(0.4316337f, 0.07030682f), new Keyframe(0.5524869f, -0.03141804f), new Keyframe(0.6549395f, 0.003909959f), new Keyframe(0.770987f, -0.009817753f), new Keyframe(0.8838775f, 0.001939224f), new Keyframe(1.0f, 0.0f));
+    [HideInInspector] public AnimationCurve ShakeAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.25f, 1f), new Keyframe(0.75f, -1f), new Keyframe(1f, 0f));
+    [HideInInspector] public bool PlayAutomatically;
+    [HideInInspector] public bool Delay;
+    [HideInInspector] public bool CanPlayForward;
+    [HideInInspector] public bool CanPlayReverse;
+    [HideInInspector] public bool IsPaused = false;
+    [HideInInspector] public bool IsPlaying = false;
+    [HideInInspector] public float DelayDuration;
+    [HideInInspector] public bool IgnoreTimeScale = true;
+    [HideInInspector] public float Duration;
+    [HideInInspector] public float ShakePunchAmount;
+    [HideInInspector] public Vector3 ShakePunchDirection;
     
     public MMTweeningDirection Direction { get; private set; }
     public float CurDuration { get; private set; }
@@ -379,11 +362,6 @@ public abstract class MMUITweener : MonoBehaviour
         SetDuration(Duration);
     }
 
-    public void SetInitOnAwake(bool initOnAwake)
-    {
-        InitOnAwake = initOnAwake;
-    }
-
     public void PlayForward()
     {
         if (!CanPlayForward)
@@ -484,7 +462,6 @@ public abstract class MMUITweener : MonoBehaviour
 
         return false;
     }
-
 
     private void CheckForDirectionChange()
     {
@@ -651,47 +628,6 @@ public abstract class MMUITweener : MonoBehaviour
         }
 
         return curClampedValue;
-    }
-
-    void CheckIfClampValueExceeds()
-    {
-        switch (LoopType)
-        {
-            case MMTweeningLoopTypeEnum.Once:
-                if (_clampedValue >= _maxClampedValue)
-                    _clampedValue = _maxClampedValue;
-                else if (_clampedValue <= _minClampedValue)
-                    _clampedValue = _minClampedValue;
-                break;
-            case MMTweeningLoopTypeEnum.PingPong:
-                if (_clampedValue >= _maxClampedValue)
-                {
-                    _clampedValue = _maxClampedValue;
-
-                    SetPlayingDirection(false);
-                }
-                else if (_clampedValue <= _minClampedValue)
-                {
-                    _clampedValue = _minClampedValue;
-
-                    SetPlayingDirection(true);
-                }
-                break;
-            case MMTweeningLoopTypeEnum.Loop:
-                if (_clampedValue >= _maxClampedValue && Direction == MMTweeningDirection.Forward)
-                {
-                    InitValueToFROM();
-
-                    SetPlayingDirection(true);
-                }
-                else if(_clampedValue <= _minClampedValue && Direction == MMTweeningDirection.Reverse)
-                {
-                    InitValueToTO();
-
-                    SetPlayingDirection(false);
-                }
-                break;
-        }
     }
 
     void SetCanPlayDir(bool canPlayForward, bool canPlayReverse)

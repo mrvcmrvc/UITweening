@@ -7,18 +7,18 @@ using UnityEngine.UI;
 /// </summary>
 public class MMTweenAlpha : MMUITweener
 {
-    [HideInInspector]
-    public float From, To;
+    [Range(0.0f, 1.0f)] public float From;
+    [Range(0.0f, 1.0f)] public float To;
 
     public float Value { get; private set; }
 
-    Graphic myImage;
-    CanvasGroup myCanvasGroup;
+    private Graphic _myImage;
+    private CanvasGroup _myCanvasGroup;
 
     protected override void Wake()
     {
-        myImage = gameObject.GetComponent<Graphic>();
-        myCanvasGroup = gameObject.GetComponent<CanvasGroup>();
+        _myImage = gameObject.GetComponent<Graphic>();
+        _myCanvasGroup = gameObject.GetComponent<CanvasGroup>();
 
         base.Wake();
     }
@@ -43,21 +43,21 @@ public class MMTweenAlpha : MMUITweener
 
     void UpdateImage()
     {
-        if (myImage == null)
+        if (_myImage == null)
             return;
 
-        Color color = myImage.color;
+        Color color = _myImage.color;
         color.a = Value;
 
-        myImage.color = color;
+        _myImage.color = color;
     }
 
     void UpdateCanvasGroup()
     {
-        if (myCanvasGroup == null)
+        if (_myCanvasGroup == null)
             return;
 
-        myCanvasGroup.alpha = Value;
+        _myCanvasGroup.alpha = Value;
     }
 
     protected override void Finish()

@@ -9,16 +9,16 @@ public class MMTweenPosition : MMUITweener
 
     public Vector3 Value { get; private set; }
 
-    RectTransform myTransform;
-    Rigidbody myRigidbody;
-    Rigidbody2D myRigidbody2D;
+    private RectTransform _myTransform;
+    private Rigidbody _myRigidbody;
+    private Rigidbody2D _myRigidbody2D;
 
     protected override void Wake()
     {
         if (UseRigidbody)
             CheckForRigidbodyAndCollider();
         else
-            myTransform = gameObject.GetComponent<RectTransform>();
+            _myTransform = gameObject.GetComponent<RectTransform>();
 
         base.Wake();
     }
@@ -28,11 +28,11 @@ public class MMTweenPosition : MMUITweener
         //TODO: Şimdilik sadece 3D rigidbody check edilip ekleniyor, ilerde projenin 2D veya 3D olmasına bağlı olarak check işlemi yapılmalı
         if (gameObject.GetComponent<Rigidbody>() == null)
         {
-            myRigidbody = gameObject.AddComponent<Rigidbody>();
-            myRigidbody.isKinematic = true;
+            _myRigidbody = gameObject.AddComponent<Rigidbody>();
+            _myRigidbody.isKinematic = true;
         }
         else
-            myRigidbody = gameObject.GetComponent<Rigidbody>();
+            _myRigidbody = gameObject.GetComponent<Rigidbody>();
 
         if (gameObject.GetComponent<Collider>() == null)
             gameObject.AddComponent<BoxCollider>();
@@ -59,13 +59,13 @@ public class MMTweenPosition : MMUITweener
     {
         if (UseRigidbody)
         {
-            if (myRigidbody != null)
-                myRigidbody.position = Value;
-            else if(myRigidbody2D != null)
-                myRigidbody2D.position = Value;
+            if (_myRigidbody != null)
+                _myRigidbody.position = Value;
+            else if(_myRigidbody2D != null)
+                _myRigidbody2D.position = Value;
         }
-        else if(myTransform != null)
-            myTransform.anchoredPosition = Value;
+        else if(_myTransform != null)
+            _myTransform.anchoredPosition = Value;
     }
 
     protected override void Finish()

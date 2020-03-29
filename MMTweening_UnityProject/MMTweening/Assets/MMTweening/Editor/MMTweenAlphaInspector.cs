@@ -1,48 +1,32 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
+﻿using UnityEditor;
 
 [CustomEditor(typeof(MMTweenAlpha))]
-public class MMTweenAlphaInspector : InspectorBase
+public class MMTweenAlphaInspector : InspectorBase<MMTweenAlpha>
 {
-    MMTweenAlpha myTarget;
-
-    void OnEnable()
-    {
-        myTarget = (MMTweenAlpha)target;
-
-        Enable(myTarget);
-    }
-
     public override void OnInspectorGUI()
     {
-        EditorGUI.BeginChangeCheck();
+        serializedObject.Update();
 
-        myTarget.From = EditorGUILayout.Slider("From", myTarget.From, 0f, 1f);
-        myTarget.To = EditorGUILayout.Slider("To", myTarget.To, 0f, 1f);
+        DrawDefaultInspector();
 
-        myTarget.LoopType = (MMTweeningLoopTypeEnum)EditorGUILayout.EnumPopup("Loop Type", myTarget.LoopType);
+        DrawLoopTypeProperty();
 
-        DrawEaseField();
+        DrawEaseProperty();
 
-        if (ease == MMTweeningEaseEnum.Curve)
-            DrawAnimCurveField();
+        if (_myTarget.Ease == MMTweeningEaseEnum.Curve)
+            DrawAnimCurveProperty();
 
-        myTarget.Delay = EditorGUILayout.Toggle("Delay", myTarget.Delay);
-        if (myTarget.Delay)
-            myTarget.DelayDuration = EditorGUILayout.FloatField("Delay Duration", myTarget.DelayDuration);
+        DrawIsDelayProperty();
 
-        InitOnAwakeField();
+        InitOnAwakeProperty();
 
-        DrawDurationField();
+        DrawDurationProperty();
 
-        myTarget.IgnoreTimeScale = EditorGUILayout.Toggle("Ignore TimeScale", myTarget.IgnoreTimeScale);
+        DrawIgnoreTimeScaleProperty();
 
-        myTarget.PlayAutomatically = EditorGUILayout.Toggle("Play Automatically", myTarget.PlayAutomatically);
+        DrawPlayAutomaticallyProperty();
 
-        if (!Application.isPlaying && (EditorGUI.EndChangeCheck() || GUI.changed))
-            EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-
-        base.OnInspectorGUI();
+        serializedObject.ApplyModifiedProperties();
+        EditorApplication.update.Invoke();
     }
 }
