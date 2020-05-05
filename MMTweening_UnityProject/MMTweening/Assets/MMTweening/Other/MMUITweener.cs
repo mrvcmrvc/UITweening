@@ -77,18 +77,18 @@ public abstract class MMUITweener : MonoBehaviour
     public MMTweeningDirection Direction { get; private set; }
     public float CurDuration { get; private set; }
 
-    float _clampedValue, _minClampedValue, _maxClampedValue, _enableTime = 0f;
-    bool _firstEnable = true, _enabled = false, _onHalfWayFired = false;
+    private float _clampedValue, _minClampedValue, _maxClampedValue, _enableTime = 0f;
+    private bool _firstEnable = true, _enabled = false, _onHalfWayFired = false;
     #endregion
 
     #region Events
     public delegate void TweenCallback();
 
-    List<TweenCallback> persistent_onKill = new List<TweenCallback>(), persistent_onFinish = new List<TweenCallback>(),
+    private List<TweenCallback> persistent_onKill = new List<TweenCallback>(), persistent_onFinish = new List<TweenCallback>(),
         persistent_onStart = new List<TweenCallback>(), persistent_onUpdate = new List<TweenCallback>(),
         persistent_onPause = new List<TweenCallback>(), persistent_onResume = new List<TweenCallback>(), persistent_onHalfWay = new List<TweenCallback>();
 
-    List<TweenCallback> nonPersistent_onKill = new List<TweenCallback>(), nonPersistent_onFinish = new List<TweenCallback>(),
+    private List<TweenCallback> nonPersistent_onKill = new List<TweenCallback>(), nonPersistent_onFinish = new List<TweenCallback>(),
         nonPersistent_onStart = new List<TweenCallback>(), nonPersistent_onUpdate = new List<TweenCallback>(),
         nonPersistent_onPause = new List<TweenCallback>(), nonPersistent_onResume = new List<TweenCallback>(), nonPersistent_onHalfWay = new List<TweenCallback>();
 
@@ -302,7 +302,7 @@ public abstract class MMUITweener : MonoBehaviour
 
     #endregion
 
-    void Awake()
+    private void Awake()
     {
         if (Duration <= 0f)
         {
@@ -313,7 +313,7 @@ public abstract class MMUITweener : MonoBehaviour
         Wake();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         if (PlayAutomatically)
             PlayForward();
@@ -347,7 +347,13 @@ public abstract class MMUITweener : MonoBehaviour
 
         for (float i = 0f; i <= Duration;)
         {
-            clampValues.Add(GetSample(i, Duration));
+            AnimationCurve animCurve = null;
+            if (Ease.Equals(MMTweeningEaseEnum.Shake))
+                animCurve = ShakeAnimationCurve;
+            else if (Ease.Equals(MMTweeningEaseEnum.Curve))
+                animCurve = CustomAnimationCurve;
+
+            clampValues.Add(MMTweeningUtilities.GetSample(i, Duration, Ease, animCurve));
 
             i += 0.02f;
         }
@@ -414,7 +420,7 @@ public abstract class MMUITweener : MonoBehaviour
         FireOnResume();
     }
 
-    void Play(bool forward)
+    private void Play(bool forward)
     {
         FireOnStart();
 
@@ -429,7 +435,7 @@ public abstract class MMUITweener : MonoBehaviour
         IsPaused = false;
     }
 
-    void Update()
+    private void Update()
     {
         if(_enabled && !IsPaused)
         {
@@ -441,7 +447,13 @@ public abstract class MMUITweener : MonoBehaviour
                     _firstEnable = false;
             }
 
-            _clampedValue = GetSample(CurDuration, Duration);
+            AnimationCurve animCurve = null;
+            if (Ease.Equals(MMTweeningEaseEnum.Shake))
+                animCurve = ShakeAnimationCurve;
+            else if (Ease.Equals(MMTweeningEaseEnum.Curve))
+                animCurve = CustomAnimationCurve;
+
+            _clampedValue = MMTweeningUtilities.GetSample(CurDuration, Duration, Ease, animCurve);
 
             SetValue(_clampedValue);
             PlayAnim();
@@ -457,7 +469,7 @@ public abstract class MMUITweener : MonoBehaviour
         }
     }
 
-    bool CheckIfAnimShouldFinish()
+    private bool CheckIfAnimShouldFinish()
     {
         switch (LoopType)
         {
@@ -514,7 +526,7 @@ public abstract class MMUITweener : MonoBehaviour
         }
     }
 
-    void StepCurDuration()
+    private void StepCurDuration()
     {
         CurDuration += (int)Direction * (IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime);
 
@@ -531,126 +543,15 @@ public abstract class MMUITweener : MonoBehaviour
             CurDuration = 0f;
     }
 
-    float GetSample(float curDuration, float duration)
-    {
-        float curClampedValue = 0f;
 
-        switch(Ease)
-        {
-            case MMTweeningEaseEnum.Shake:
-                curClampedValue = MMTweeningUtilities.AnimationCurve(ShakeAnimationCurve, curDuration, duration);
-                break;
-            //case MMTweeningEaseEnum.Punch:
-            //    curClampedValue = MMTweeningUtilities.AnimationCurve(PunchAnimationCurve, curDuration, duration);
-            //    break;
-            case MMTweeningEaseEnum.Curve:
-                curClampedValue = MMTweeningUtilities.AnimationCurve(CustomAnimationCurve, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.Linear:
-                curClampedValue = MMTweeningUtilities.Linear(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InCubic:
-                curClampedValue = MMTweeningUtilities.EaseInCubic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutCubic:
-                curClampedValue = MMTweeningUtilities.EaseOutCubic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutCubic:
-                curClampedValue = MMTweeningUtilities.EaseInOutCubic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InSine:
-                curClampedValue = MMTweeningUtilities.EaseInSine(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutSine:
-                curClampedValue = MMTweeningUtilities.EaseOutSine(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutSine:
-                curClampedValue = MMTweeningUtilities.EaseInOutSine(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InExpo:
-                curClampedValue = MMTweeningUtilities.EaseInExpo(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutExpo:
-                curClampedValue = MMTweeningUtilities.EaseOutExpo(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutExpo:
-                curClampedValue = MMTweeningUtilities.EaseInOutExpo(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InBack:
-                curClampedValue = MMTweeningUtilities.EaseInBack(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutBack:
-                curClampedValue = MMTweeningUtilities.EaseOutBack(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutBack:
-                curClampedValue = MMTweeningUtilities.EaseInOutBack(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InQuintic:
-                curClampedValue = MMTweeningUtilities.EaseInQuint(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutQuintic:
-                curClampedValue = MMTweeningUtilities.EaseOutQuint(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutQuintic:
-                curClampedValue = MMTweeningUtilities.EaseInOutQuint(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InQuartic:
-                curClampedValue = MMTweeningUtilities.EaseInQuartic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutQuartic:
-                curClampedValue = MMTweeningUtilities.EaseOutQuartic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutQuartic:
-                curClampedValue = MMTweeningUtilities.EaseInOutQuartic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InQuadratic:
-                curClampedValue = MMTweeningUtilities.EaseInQuadratic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutQuadratic:
-                curClampedValue = MMTweeningUtilities.EaseOutQuadratic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutQuadratic:
-                curClampedValue = MMTweeningUtilities.EaseInOutQuadratic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InCircular:
-                curClampedValue = MMTweeningUtilities.EaseInCircular(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutCircular:
-                curClampedValue = MMTweeningUtilities.EaseOutCircular(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutCircular:
-                curClampedValue = MMTweeningUtilities.EaseInOutCircular(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InElastic:
-                curClampedValue = MMTweeningUtilities.EaseInElastic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutElastic:
-                curClampedValue = MMTweeningUtilities.EaseOutElastic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutElastic:
-                curClampedValue = MMTweeningUtilities.EaseInOutElastic(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InBounce:
-                curClampedValue = MMTweeningUtilities.EaseInBounce(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.OutBounce:
-                curClampedValue = MMTweeningUtilities.EaseOutBounce(0f, 1f, curDuration, duration);
-                break;
-            case MMTweeningEaseEnum.InOutBounce:
-                curClampedValue = MMTweeningUtilities.EaseInOutBounce(0f, 1f, curDuration, duration);
-                break;
-        }
 
-        return curClampedValue;
-    }
-
-    void SetCanPlayDir(bool canPlayForward, bool canPlayReverse)
+    private void SetCanPlayDir(bool canPlayForward, bool canPlayReverse)
     {
         CanPlayForward = canPlayForward;
         CanPlayReverse = canPlayReverse;
     }
 
-    void SetPlayingDirection(bool forward)
+    private void SetPlayingDirection(bool forward)
     {
         SetCanPlayDir(!forward, forward);
 
@@ -663,7 +564,7 @@ public abstract class MMUITweener : MonoBehaviour
             _onHalfWayFired = false;
     }
 
-    void InitClampedValue(bool forward)
+    private void InitClampedValue(bool forward)
     {
         if (IsPaused)
             return;
@@ -690,12 +591,12 @@ public abstract class MMUITweener : MonoBehaviour
         FireOnKill();
     }
 
-    void CloseUpdate()
+    private void CloseUpdate()
     {
         _enabled = false;
     }
 
-    void ResetForFirstEnable()
+    private void ResetForFirstEnable()
     {
         _enableTime = 0f;
         _firstEnable = true;

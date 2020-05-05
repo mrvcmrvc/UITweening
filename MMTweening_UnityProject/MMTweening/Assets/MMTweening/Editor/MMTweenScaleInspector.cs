@@ -3,11 +3,17 @@
 [CustomEditor(typeof(MMTweenScale))]
 public class MMTweenScaleInspector : InspectorBase<MMTweenScale>
 {
+    private SerializedProperty _easeProperty;
+    private SerializedProperty _loopTypeProperty;
+
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        if (_myTarget.Ease != MMTweeningEaseEnum.Shake)
+        _easeProperty = serializedObject.FindProperty("Ease");
+        _loopTypeProperty = serializedObject.FindProperty("LoopType");
+
+        if (_easeProperty.enumValueIndex != (int)MMTweeningEaseEnum.Shake)
         {
             DrawDefaultInspector();
 
@@ -17,19 +23,19 @@ public class MMTweenScaleInspector : InspectorBase<MMTweenScale>
         {
             DrawShakePunchAmountProperty();
 
-            _myTarget.LoopType = MMTweeningLoopTypeEnum.PingPong;
+            _loopTypeProperty.enumValueIndex = (int)MMTweeningLoopTypeEnum.PingPong;
         }
 
         DrawEaseProperty();
 
-        if (_myTarget.Ease == MMTweeningEaseEnum.Curve)
+        if (_easeProperty.enumValueIndex == (int)MMTweeningEaseEnum.Curve)
             DrawAnimCurveProperty();
 
         DrawIsDelayProperty();
 
         InitOnAwakeProperty();
 
-        if (_myTarget.Ease == MMTweeningEaseEnum.Shake)
+        if (_easeProperty.enumValueIndex == (int)MMTweeningEaseEnum.Shake)
             _myTarget.SetDuration(0.02f);
         else
             DrawDurationProperty();

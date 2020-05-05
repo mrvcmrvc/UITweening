@@ -3,9 +3,13 @@
 [CustomEditor(typeof(MMTweenColor))]
 public class MMTweenColorInspector : InspectorBase<MMTweenColor>
 {
+    private SerializedProperty _easeProperty;
+
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
+        _easeProperty = serializedObject.FindProperty("Ease");
 
         DrawDefaultInspector();
 
@@ -13,7 +17,7 @@ public class MMTweenColorInspector : InspectorBase<MMTweenColor>
 
         DrawEaseProperty();
 
-        if (_myTarget.Ease == MMTweeningEaseEnum.Curve)
+        if (_easeProperty.enumValueIndex == (int)MMTweeningEaseEnum.Curve)
             DrawAnimCurveProperty();
 
         DrawIsDelayProperty();
