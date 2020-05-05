@@ -203,10 +203,12 @@ public abstract class MMUITweener : MonoBehaviour
     #region Callback Fire Functions
     protected void FireOnKill()
     {
-        if (nonPersistent_onKill != null && nonPersistent_onKill.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onKill);
+        if (cache.Count > 0)
         {
-            nonPersistent_onKill.ForEach(pe => pe());
             nonPersistent_onKill.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onKill != null && persistent_onKill.Count > 0)
@@ -215,10 +217,12 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected void FireOnFinish()
     {
-        if (nonPersistent_onFinish != null && nonPersistent_onFinish.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onFinish);
+        if (cache.Count > 0)
         {
-            nonPersistent_onFinish.ForEach(pe => pe());
             nonPersistent_onFinish.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onFinish != null && persistent_onFinish.Count > 0)
@@ -227,10 +231,12 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected void FireOnStart()
     {
-        if (nonPersistent_onStart != null && nonPersistent_onStart.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onStart);
+        if (cache.Count > 0)
         {
-            nonPersistent_onStart.ForEach(pe => pe());
             nonPersistent_onStart.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onStart != null && persistent_onStart.Count > 0)
@@ -239,10 +245,12 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected void FireOnUpdate()
     {
-        if (nonPersistent_onUpdate != null && nonPersistent_onUpdate.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onUpdate);
+        if (cache.Count > 0)
         {
-            nonPersistent_onUpdate.ForEach(pe => pe());
             nonPersistent_onUpdate.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onUpdate != null && persistent_onUpdate.Count > 0)
@@ -251,10 +259,12 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected void FireOnPause()
     {
-        if (nonPersistent_onPause != null && nonPersistent_onPause.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onPause);
+        if (cache.Count > 0)
         {
-            nonPersistent_onPause.ForEach(pe => pe());
             nonPersistent_onPause.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onPause != null && persistent_onPause.Count > 0)
@@ -263,10 +273,12 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected void FireOnResume()
     {
-        if (nonPersistent_onResume != null && nonPersistent_onResume.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onResume);
+        if (cache.Count > 0)
         {
-            nonPersistent_onResume.ForEach(pe => pe());
             nonPersistent_onResume.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onResume != null && persistent_onResume.Count > 0)
@@ -275,10 +287,12 @@ public abstract class MMUITweener : MonoBehaviour
 
     protected void FireOnHalfWay()
     {
-        if (nonPersistent_onHalfWay != null && nonPersistent_onHalfWay.Count > 0)
+        List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onHalfWay);
+        if (cache.Count > 0)
         {
-            nonPersistent_onHalfWay.ForEach(pe => pe());
             nonPersistent_onHalfWay.Clear();
+
+            cache.ForEach(pe => pe());
         }
 
         if (persistent_onHalfWay != null && persistent_onHalfWay.Count > 0)
