@@ -1,12 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+
+
 
 [RequireComponent(typeof(RectTransform))]
 public class MMTweenRotation : MMUITweener
 {
     public Vector3 From, To;
 
-    public Vector3 Value { get; private set; }
+    public Quaternion Value { get; private set; }
 
     RectTransform myTransform;
 
@@ -23,14 +24,18 @@ public class MMTweenRotation : MMUITweener
         {
             Vector3 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
 
-            Value = GetComponent<RectTransform>().localEulerAngles + delta;
+            Vector3 newEulerAngle = myTransform.localEulerAngles + delta;
+
+            Value = Quaternion.Euler(newEulerAngle);
         }
         else
         {
-            Vector3 diff = To - From;
-            Vector3 delta = diff * clampedValue;
+            Quaternion fromQuat = Quaternion.Euler(From);
+            Quaternion toQuat = Quaternion.Euler(To);
 
-            Value = From + delta;
+            Quaternion newQuat = Quaternion.Lerp(fromQuat, toQuat, clampedValue);
+
+            Value = newQuat;
         }
     }
 
@@ -39,7 +44,7 @@ public class MMTweenRotation : MMUITweener
         if (myTransform == null)
             return;
 
-        myTransform.localEulerAngles = Value;
+        myTransform.localRotation = Value;
     }
 
     protected override void Finish()
@@ -78,14 +83,14 @@ public class MMTweenRotation : MMUITweener
 
     public override void InitValueToFROM()
     {
-        Value = From;
+        Value = Quaternion.Euler(From);
 
         base.InitValueToFROM();
     }
 
     public override void InitValueToTO()
     {
-        Value = To;
+        Value = Quaternion.Euler(To);
 
         base.InitValueToTO();
     }

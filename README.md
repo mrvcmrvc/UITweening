@@ -1,5 +1,5 @@
 # MMTweening
-Tween Systems for Unity 5 UI
+Tween Systems for Unity UI
 
 This tween system is inspired from DoTween.
 
@@ -18,11 +18,3 @@ CURRENT TWEENS:
 - Size
 
 There are 11 ease type, each with in, out and InOut variants. Also there is Animation Curve which you can easily define your ease.
-
-NOTES:
-- Rotation tween is currently using Euler rotation, allowing for gimbal lock problem.
-
-COMING FEATURES:
- - Quaternion Tween (to eliminate gimbal lock problem)
- - Material Tween (allows to tween material property)
- - Additional settings for rotations

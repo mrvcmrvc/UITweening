@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -22,36 +21,46 @@ public class MMTweenColor : MMUITweener
 
     protected override void SetValue(float clampedValue)
     {
-        float r = CalculateR(clampedValue);
-        float g = CalculateG(clampedValue);
-        float b = CalculateB(clampedValue);
-        float a = CalculateA(clampedValue);
+        float fromH, fromS, fromV;
+        float toH, toS, toV;
 
-        Value = From + new Color(r, g, b, a);
+        Color.RGBToHSV(From, out fromH, out fromS, out fromV);
+        Color.RGBToHSV(To, out toH, out toS, out toV);
+
+        float h = CalculateHue(clampedValue, fromH, toH);
+
+        float s = CalculateSV(clampedValue, fromS, toS);
+        float v = CalculateSV(clampedValue, fromV, toV);
+
+        Value = Color.HSVToRGB(h, s, v);
     }
 
-    float CalculateR(float clampedValue)
-    {    
-        float diff = To.r - From.r;
-        return diff * clampedValue;
-    }
-
-    float CalculateG(float clampedValue)
+    float CalculateHue(float clampedValue, float from, float to)
     {
-        float diff = To.g - From.g;
-        return diff * clampedValue;
+        float diff = to - from;
+        int dirSign = 1;
+
+        if (Mathf.Abs(diff) > 0.5f)
+        {
+            if (diff > 0)
+                dirSign = -1;
+
+            diff = 1 - Mathf.Abs(diff);
+        }
+
+        float newH = from + (dirSign * diff * clampedValue);
+        if (newH > 1.0f)
+            newH -= 1;
+        else if (newH < 0.0f)
+            newH += 1.0f;
+
+        return newH;
     }
 
-    float CalculateB(float clampedValue)
+    float CalculateSV(float clampedValue, float from, float to)
     {
-        float diff = To.b - From.b;
-        return diff * clampedValue;
-    }
-
-    float CalculateA(float clampedValue)
-    {
-        float diff = To.a - From.a;
-        return diff * clampedValue;
+        float diff = to - from;
+        return from + (diff * clampedValue);
     }
 
     protected override void PlayAnim()
