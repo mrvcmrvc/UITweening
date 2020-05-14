@@ -1,0 +1,8 @@
+{
+    "name": "UITweening",
+    "displayName": "UI Tweening Framework",
+    "version": "1.0.0",
+    "unity": "2019.1",
+    "description": "Tween system specifically tailored for Unity UI.",
+    "dependencies" : {}
+}
