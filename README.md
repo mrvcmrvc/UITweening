@@ -1,4 +1,4 @@
-# MMTweening
+# UITweening
 Tween Systems for Unity UI
 
 This tween system is inspired from DoTween.
