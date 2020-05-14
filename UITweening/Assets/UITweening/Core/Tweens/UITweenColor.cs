@@ -2,9 +2,9 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// Does NOT work with MMTweenAlpha.
+/// Does NOT work with UITweenAlpha.
 /// </summary>
-public class MMTweenColor : MMUITweener
+public class UITweenColor : UITweener
 {
     public Color From, To;
 

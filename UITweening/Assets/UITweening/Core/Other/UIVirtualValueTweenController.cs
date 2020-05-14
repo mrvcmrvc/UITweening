@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class MMVirtualValueTweenController : MonoBehaviour
+public class UIVirtualValueTweenController : MonoBehaviour
 {
-    private static MMVirtualValueTweenController _instance;
-    public static MMVirtualValueTweenController Instance
+    private static UIVirtualValueTweenController _instance;
+    public static UIVirtualValueTweenController Instance
     {
         get
         {
             if (_instance == null)
-                _instance = FindObjectOfType<MMVirtualValueTweenController>();
+                _instance = FindObjectOfType<UIVirtualValueTweenController>();
 
             return _instance;
         }
     }
 
-    public List<MMVirtualValueTweener> ActiveTweenerList { get; private set; }
+    public List<UIVirtualValueTweener> ActiveTweenerList { get; private set; }
 
-    private List<MMVirtualValueTweener> _finishedTweens = new List<MMVirtualValueTweener>();
+    private List<UIVirtualValueTweener> _finishedTweens = new List<UIVirtualValueTweener>();
 
     private void Awake()
     {
@@ -25,9 +25,9 @@ public class MMVirtualValueTweenController : MonoBehaviour
             _instance = this;
 
         if (ActiveTweenerList == null)
-            ActiveTweenerList = new List<MMVirtualValueTweener>();
+            ActiveTweenerList = new List<UIVirtualValueTweener>();
 
-        _finishedTweens = new List<MMVirtualValueTweener>();
+        _finishedTweens = new List<UIVirtualValueTweener>();
     }
 
     private void OnDestroy()
@@ -38,15 +38,15 @@ public class MMVirtualValueTweenController : MonoBehaviour
         _finishedTweens = null;
     }
 
-    public void StartTweener(MMVirtualValueTweener tween)
+    public void StartTweener(UIVirtualValueTweener tween)
     {
         if (ActiveTweenerList == null)
-            ActiveTweenerList = new List<MMVirtualValueTweener>();
+            ActiveTweenerList = new List<UIVirtualValueTweener>();
 
         ActiveTweenerList.Add(tween);
     }
 
-    public void StopTweener(MMVirtualValueTweener tween)
+    public void StopTweener(UIVirtualValueTweener tween)
     {
         _finishedTweens.Add(tween);
     }
@@ -55,7 +55,7 @@ public class MMVirtualValueTweenController : MonoBehaviour
     {
         foreach (var tween in ActiveTweenerList)
         {
-            var clampedValue = MMTweeningUtilities.GetSample(
+            var clampedValue = UITweeningUtilities.GetSample(
                 tween.CurDuration,
                 tween.TweenInfo.Duration, 
                 tween.TweenInfo.Ease);

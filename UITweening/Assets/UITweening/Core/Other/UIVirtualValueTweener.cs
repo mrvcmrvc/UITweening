@@ -1,24 +1,24 @@
 ﻿using System;
 using UnityEngine;
 
-public class MMVirtualValueTweenerInfo
+public class UIVirtualValueTweenerInfo
 {
     public float From;
     public float To;
     public float Duration;
     public bool IgnoreTimeScale = true;
-    public MMTweeningEaseEnum Ease = MMTweeningEaseEnum.Linear;
+    public UITweeningEaseEnum Ease = UITweeningEaseEnum.Linear;
     public Action<float, bool> Callback;
 }
 
-public class MMVirtualValueTweener
+public class UIVirtualValueTweener
 {
-    public MMVirtualValueTweenerInfo TweenInfo { get; private set; }
+    public UIVirtualValueTweenerInfo TweenInfo { get; private set; }
     public bool IsPlaying { get; private set; }
     public float CurDuration { get; private set; }
     public float Value { get; private set; }
 
-    public MMVirtualValueTweener(MMVirtualValueTweenerInfo tweenInfo)
+    public UIVirtualValueTweener(UIVirtualValueTweenerInfo tweenInfo)
     {
         TweenInfo = tweenInfo;
     }

@@ -2,13 +2,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-public class MMTweenSize : MMUITweener
+public class UITweenScale : UITweener
 {
-    public Vector2 From, To;
+    public Vector3 From, To;
 
-    public Vector2 Value { get; private set; }
+    public Vector3 Value { get; private set; }
 
     RectTransform myTransform;
+
+    #region implemented abstract members of UITweener
 
     protected override void Wake()
     {
@@ -19,16 +21,16 @@ public class MMTweenSize : MMUITweener
 
     protected override void SetValue(float clampedValue)
     {
-        if (Ease == MMTweeningEaseEnum.Shake/* || Ease == MMTweeningEaseEnum.Punch*/)
+        if (Ease == UITweeningEaseEnum.Shake/* || Ease == UITweeningEaseEnum.Punch*/)
         {
-            Vector2 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
+            Vector3 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
 
-            Value = GetComponent<RectTransform>().sizeDelta + delta;
+            Value = GetComponent<RectTransform>().localScale + delta;
         }
         else
         {
-            Vector2 diff = To - From;
-            Vector2 delta = diff * clampedValue;
+            Vector3 diff = To - From;
+            Vector3 delta = diff * clampedValue;
 
             Value = From + delta;
         }
@@ -39,7 +41,7 @@ public class MMTweenSize : MMUITweener
         if (myTransform == null)
             return;
 
-        myTransform.sizeDelta = Value;
+        myTransform.localScale = Value;
     }
 
     protected override void Finish()
@@ -50,29 +52,32 @@ public class MMTweenSize : MMUITweener
     {
     }
 
+    #endregion
+
     #region ContextMenu
+
     [ContextMenu("Set FROM")]
     void SetFrom()
     {
-        From = GetComponent<RectTransform>().sizeDelta;
+        From = GetComponent<RectTransform>().localScale;
     }
 
     [ContextMenu("Set TO")]
     void SetTo()
     {
-        To = GetComponent<RectTransform>().sizeDelta;
+        To = GetComponent<RectTransform>().localScale;
     }
 
     [ContextMenu("Assume FROM")]
     void AssumeFrom()
     {
-        GetComponent<RectTransform>().sizeDelta = From;
+        GetComponent<RectTransform>().localScale = From;
     }
 
     [ContextMenu("Assume TO")]
     void AssumeTo()
     {
-        GetComponent<RectTransform>().sizeDelta = To;
+        GetComponent<RectTransform>().localScale = To;
     }
 
     public override void InitValueToFROM()
@@ -88,5 +93,6 @@ public class MMTweenSize : MMUITweener
 
         base.InitValueToTO();
     }
+
     #endregion
 }

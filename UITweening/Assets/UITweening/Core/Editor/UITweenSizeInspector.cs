@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 
-[CustomEditor(typeof(MMTweenSize))]
-public class MMTweenSizeInspector : InspectorBase<MMTweenSize>
+[CustomEditor(typeof(UITweenSize))]
+public class UITweenSizeInspector : InspectorBase<UITweenSize>
 {
     private SerializedProperty _easeProperty;
     private SerializedProperty _loopTypeProperty;
@@ -13,7 +13,7 @@ public class MMTweenSizeInspector : InspectorBase<MMTweenSize>
         _easeProperty = serializedObject.FindProperty("Ease");
         _loopTypeProperty = serializedObject.FindProperty("LoopType");
 
-        if (_easeProperty.enumValueIndex != (int)MMTweeningEaseEnum.Shake)
+        if (_easeProperty.enumValueIndex != (int)UITweeningEaseEnum.Shake)
         {
             DrawDefaultInspector();
 
@@ -23,19 +23,19 @@ public class MMTweenSizeInspector : InspectorBase<MMTweenSize>
         {
             DrawShakePunchAmountProperty();
 
-            _loopTypeProperty.enumValueIndex = (int)MMTweeningLoopTypeEnum.PingPong;
+            _loopTypeProperty.enumValueIndex = (int)UITweeningLoopTypeEnum.PingPong;
         }
 
         DrawEaseProperty();
 
-        if (_easeProperty.enumValueIndex == (int)MMTweeningEaseEnum.Curve)
+        if (_easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Curve)
             DrawAnimCurveProperty();
 
         DrawIsDelayProperty();
 
         InitOnAwakeProperty();
 
-        if (_easeProperty.enumValueIndex == (int)MMTweeningEaseEnum.Shake)
+        if (_easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Shake)
             _myTarget.SetDuration(0.02f);
         else
             DrawDurationProperty();

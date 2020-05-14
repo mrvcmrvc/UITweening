@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 
 public class InspectorBase<T> : Editor where
-    T : MMUITweener
+    T : UITweener
 {
     private SerializedProperty _easeProperty;
     private SerializedProperty _animCurveProperty;

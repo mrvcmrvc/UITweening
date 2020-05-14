@@ -1,113 +1,113 @@
 ﻿using UnityEngine;
 
-public class MMTweeningUtilities
+public class UITweeningUtilities
 {
-    public static float GetSample(float curDuration, float duration, MMTweeningEaseEnum ease, AnimationCurve animationCurve = null)
+    public static float GetSample(float curDuration, float duration, UITweeningEaseEnum ease, AnimationCurve animationCurve = null)
     {
         float curClampedValue = 0f;
 
         switch (ease)
         {
-            case MMTweeningEaseEnum.Shake:
+            case UITweeningEaseEnum.Shake:
                 curClampedValue = AnimationCurve(animationCurve, curDuration, duration);
                 break;
-            //case MMTweeningEaseEnum.Punch:
+            //case UITweeningEaseEnum.Punch:
             //    curClampedValue = AnimationCurve(PunchAnimationCurve, curDuration, duration);
             //    break;
-            case MMTweeningEaseEnum.Curve:
+            case UITweeningEaseEnum.Curve:
                 curClampedValue = AnimationCurve(animationCurve, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.Linear:
+            case UITweeningEaseEnum.Linear:
                 curClampedValue = Linear(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InCubic:
+            case UITweeningEaseEnum.InCubic:
                 curClampedValue = EaseInCubic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutCubic:
+            case UITweeningEaseEnum.OutCubic:
                 curClampedValue = EaseOutCubic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutCubic:
+            case UITweeningEaseEnum.InOutCubic:
                 curClampedValue = EaseInOutCubic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InSine:
+            case UITweeningEaseEnum.InSine:
                 curClampedValue = EaseInSine(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutSine:
+            case UITweeningEaseEnum.OutSine:
                 curClampedValue = EaseOutSine(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutSine:
+            case UITweeningEaseEnum.InOutSine:
                 curClampedValue = EaseInOutSine(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InExpo:
+            case UITweeningEaseEnum.InExpo:
                 curClampedValue = EaseInExpo(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutExpo:
+            case UITweeningEaseEnum.OutExpo:
                 curClampedValue = EaseOutExpo(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutExpo:
+            case UITweeningEaseEnum.InOutExpo:
                 curClampedValue = EaseInOutExpo(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InBack:
+            case UITweeningEaseEnum.InBack:
                 curClampedValue = EaseInBack(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutBack:
+            case UITweeningEaseEnum.OutBack:
                 curClampedValue = EaseOutBack(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutBack:
+            case UITweeningEaseEnum.InOutBack:
                 curClampedValue = EaseInOutBack(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InQuintic:
+            case UITweeningEaseEnum.InQuintic:
                 curClampedValue = EaseInQuint(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutQuintic:
+            case UITweeningEaseEnum.OutQuintic:
                 curClampedValue = EaseOutQuint(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutQuintic:
+            case UITweeningEaseEnum.InOutQuintic:
                 curClampedValue = EaseInOutQuint(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InQuartic:
+            case UITweeningEaseEnum.InQuartic:
                 curClampedValue = EaseInQuartic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutQuartic:
+            case UITweeningEaseEnum.OutQuartic:
                 curClampedValue = EaseOutQuartic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutQuartic:
+            case UITweeningEaseEnum.InOutQuartic:
                 curClampedValue = EaseInOutQuartic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InQuadratic:
+            case UITweeningEaseEnum.InQuadratic:
                 curClampedValue = EaseInQuadratic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutQuadratic:
+            case UITweeningEaseEnum.OutQuadratic:
                 curClampedValue = EaseOutQuadratic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutQuadratic:
+            case UITweeningEaseEnum.InOutQuadratic:
                 curClampedValue = EaseInOutQuadratic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InCircular:
+            case UITweeningEaseEnum.InCircular:
                 curClampedValue = EaseInCircular(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutCircular:
+            case UITweeningEaseEnum.OutCircular:
                 curClampedValue = EaseOutCircular(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutCircular:
+            case UITweeningEaseEnum.InOutCircular:
                 curClampedValue = EaseInOutCircular(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InElastic:
+            case UITweeningEaseEnum.InElastic:
                 curClampedValue = EaseInElastic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutElastic:
+            case UITweeningEaseEnum.OutElastic:
                 curClampedValue = EaseOutElastic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutElastic:
+            case UITweeningEaseEnum.InOutElastic:
                 curClampedValue = EaseInOutElastic(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InBounce:
+            case UITweeningEaseEnum.InBounce:
                 curClampedValue = EaseInBounce(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.OutBounce:
+            case UITweeningEaseEnum.OutBounce:
                 curClampedValue = EaseOutBounce(0f, 1f, curDuration, duration);
                 break;
-            case MMTweeningEaseEnum.InOutBounce:
+            case UITweeningEaseEnum.InOutBounce:
                 curClampedValue = EaseInOutBounce(0f, 1f, curDuration, duration);
                 break;
         }

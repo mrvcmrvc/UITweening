@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Does NOT work with MMTweenColor.
+/// Does NOT work with UITweenColor.
 /// </summary>
-public class MMTweenAlpha : MMUITweener
+public class UITweenAlpha : UITweener
 {
     [Range(0.0f, 1.0f)] public float From;
     [Range(0.0f, 1.0f)] public float To;

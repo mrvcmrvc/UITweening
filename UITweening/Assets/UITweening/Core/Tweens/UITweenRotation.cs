@@ -3,7 +3,7 @@
 
 
 [RequireComponent(typeof(RectTransform))]
-public class MMTweenRotation : MMUITweener
+public class UITweenRotation : UITweener
 {
     public Vector3 From, To;
 
@@ -20,7 +20,7 @@ public class MMTweenRotation : MMUITweener
 
     protected override void SetValue(float clampedValue)
     {
-        if (Ease == MMTweeningEaseEnum.Shake/* || Ease == MMTweeningEaseEnum.Punch*/)
+        if (Ease == UITweeningEaseEnum.Shake/* || Ease == UITweeningEaseEnum.Punch*/)
         {
             Vector3 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
 

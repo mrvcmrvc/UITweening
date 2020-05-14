@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public enum MMTweeningEaseEnum
+public enum UITweeningEaseEnum
 {
     Curve,
     Linear,
@@ -40,24 +40,24 @@ public enum MMTweeningEaseEnum
     Shake
 }
 
-public enum MMTweeningLoopTypeEnum
+public enum UITweeningLoopTypeEnum
 {
     Once,
     Loop,
     PingPong,
 } 
 
-public enum MMTweeningDirection
+public enum UITweeningDirection
 {
     Forward = 1,
     Reverse = -1
 }
 
-public abstract class MMUITweener : MonoBehaviour
+public abstract class UITweener : MonoBehaviour
 {
     #region CommonVariables
-    [HideInInspector] public MMTweeningEaseEnum Ease;
-    [HideInInspector] public MMTweeningLoopTypeEnum LoopType;
+    [HideInInspector] public UITweeningEaseEnum Ease;
+    [HideInInspector] public UITweeningLoopTypeEnum LoopType;
     [HideInInspector] public bool InitOnAwake;
     [HideInInspector] public AnimationCurve CustomAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
     [HideInInspector] public AnimationCurve PunchAnimationCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(0.112586f, 0.9976035f), new Keyframe(0.3120486f, -0.1720615f), new Keyframe(0.4316337f, 0.07030682f), new Keyframe(0.5524869f, -0.03141804f), new Keyframe(0.6549395f, 0.003909959f), new Keyframe(0.770987f, -0.009817753f), new Keyframe(0.8838775f, 0.001939224f), new Keyframe(1.0f, 0.0f));
@@ -74,7 +74,7 @@ public abstract class MMUITweener : MonoBehaviour
     [HideInInspector] public float ShakePunchAmount;
     [HideInInspector] public Vector3 ShakePunchDirection;
     
-    public MMTweeningDirection Direction { get; private set; }
+    public UITweeningDirection Direction { get; private set; }
     public float CurDuration { get; private set; }
 
     private float _clampedValue, _minClampedValue, _maxClampedValue, _enableTime = 0f;
@@ -99,7 +99,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnKill(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnKill(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onKill.Add(callback);
@@ -114,7 +114,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnFinish(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnFinish(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onFinish.Add(callback);
@@ -129,7 +129,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnStart(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnStart(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onStart.Add(callback);
@@ -144,7 +144,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnUpdate(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnUpdate(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onUpdate.Add(callback);
@@ -159,7 +159,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnPause(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnPause(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onPause.Add(callback);
@@ -174,7 +174,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnResume(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnResume(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onResume.Add(callback);
@@ -189,7 +189,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// <param name="callback">Callback to call</param>
     /// <param name="isPersistent"></param>
     /// <returns></returns>
-    public MMUITweener AddOnHalfWay(TweenCallback callback, bool isPersistent = true)
+    public UITweener AddOnHalfWay(TweenCallback callback, bool isPersistent = true)
     {
         if (isPersistent)
             persistent_onHalfWay.Add(callback);
@@ -348,12 +348,12 @@ public abstract class MMUITweener : MonoBehaviour
         for (float i = 0f; i <= Duration;)
         {
             AnimationCurve animCurve = null;
-            if (Ease.Equals(MMTweeningEaseEnum.Shake))
+            if (Ease.Equals(UITweeningEaseEnum.Shake))
                 animCurve = ShakeAnimationCurve;
-            else if (Ease.Equals(MMTweeningEaseEnum.Curve))
+            else if (Ease.Equals(UITweeningEaseEnum.Curve))
                 animCurve = CustomAnimationCurve;
 
-            clampValues.Add(MMTweeningUtilities.GetSample(i, Duration, Ease, animCurve));
+            clampValues.Add(UITweeningUtilities.GetSample(i, Duration, Ease, animCurve));
 
             i += 0.02f;
         }
@@ -364,10 +364,10 @@ public abstract class MMUITweener : MonoBehaviour
         _maxClampedValue = clampValues[clampValues.Count - 1];
     }
 
-    public void SetEase(MMTweeningEaseEnum easeType)
+    public void SetEase(UITweeningEaseEnum easeType)
     {
-        if ((/*easeType == MMTweeningEaseEnum.Punch || */easeType == MMTweeningEaseEnum.Shake)
-            && (GetType() == typeof(MMTweenColor) || GetType() == typeof(MMTweenAlpha)))
+        if ((/*easeType == UITweeningEaseEnum.Punch || */easeType == UITweeningEaseEnum.Shake)
+            && (GetType() == typeof(UITweenColor) || GetType() == typeof(UITweenAlpha)))
             return;
 
         Ease = easeType;
@@ -448,12 +448,12 @@ public abstract class MMUITweener : MonoBehaviour
             }
 
             AnimationCurve animCurve = null;
-            if (Ease.Equals(MMTweeningEaseEnum.Shake))
+            if (Ease.Equals(UITweeningEaseEnum.Shake))
                 animCurve = ShakeAnimationCurve;
-            else if (Ease.Equals(MMTweeningEaseEnum.Curve))
+            else if (Ease.Equals(UITweeningEaseEnum.Curve))
                 animCurve = CustomAnimationCurve;
 
-            _clampedValue = MMTweeningUtilities.GetSample(CurDuration, Duration, Ease, animCurve);
+            _clampedValue = UITweeningUtilities.GetSample(CurDuration, Duration, Ease, animCurve);
 
             SetValue(_clampedValue);
             PlayAnim();
@@ -473,16 +473,16 @@ public abstract class MMUITweener : MonoBehaviour
     {
         switch (LoopType)
         {
-            case MMTweeningLoopTypeEnum.Once:
-                if ((CurDuration == 0f && Direction == MMTweeningDirection.Reverse) || (CurDuration == Duration && Direction == MMTweeningDirection.Forward))
+            case UITweeningLoopTypeEnum.Once:
+                if ((CurDuration == 0f && Direction == UITweeningDirection.Reverse) || (CurDuration == Duration && Direction == UITweeningDirection.Forward))
                 {
                     FinishTween();
 
                     return true;
                 }
                 break;
-            case MMTweeningLoopTypeEnum.PingPong:
-            case MMTweeningLoopTypeEnum.Loop:
+            case UITweeningLoopTypeEnum.PingPong:
+            case UITweeningLoopTypeEnum.Loop:
                 break;
         }
 
@@ -493,9 +493,9 @@ public abstract class MMUITweener : MonoBehaviour
     {
         switch (LoopType)
         {
-            case MMTweeningLoopTypeEnum.Once:
+            case UITweeningLoopTypeEnum.Once:
                 break;
-            case MMTweeningLoopTypeEnum.PingPong:
+            case UITweeningLoopTypeEnum.PingPong:
                 if (CurDuration >= Duration)
                 {
                     _clampedValue = 1f;
@@ -509,14 +509,14 @@ public abstract class MMUITweener : MonoBehaviour
                     SetPlayingDirection(true);
                 }
                 break;
-            case MMTweeningLoopTypeEnum.Loop:
-                if (CurDuration >= Duration && Direction == MMTweeningDirection.Forward)
+            case UITweeningLoopTypeEnum.Loop:
+                if (CurDuration >= Duration && Direction == UITweeningDirection.Forward)
                 {
                     InitValueToFROM();
 
                     SetPlayingDirection(true);
                 }
-                else if (CurDuration <= 0f && Direction == MMTweeningDirection.Reverse)
+                else if (CurDuration <= 0f && Direction == UITweeningDirection.Reverse)
                 {
                     InitValueToTO();
 
@@ -556,9 +556,9 @@ public abstract class MMUITweener : MonoBehaviour
         SetCanPlayDir(!forward, forward);
 
         if (forward)
-            Direction =  MMTweeningDirection.Forward;
+            Direction =  UITweeningDirection.Forward;
         else
-            Direction = MMTweeningDirection.Reverse;
+            Direction = UITweeningDirection.Reverse;
 
         if((forward && CurDuration < Duration / 2f) || (!forward && CurDuration > Duration / 2f))
             _onHalfWayFired = false;
@@ -607,7 +607,7 @@ public abstract class MMUITweener : MonoBehaviour
     /// </summary>
     public void FinishTween()
     {
-        if (Direction == MMTweeningDirection.Forward)
+        if (Direction == UITweeningDirection.Forward)
             InitValueToTO();
         else
             InitValueToFROM();
@@ -626,7 +626,7 @@ public abstract class MMUITweener : MonoBehaviour
     {
         SetCanPlayDir(true, false);
 
-        Direction = MMTweeningDirection.Forward;
+        Direction = UITweeningDirection.Forward;
 
         CurDuration = 0f;
         _clampedValue = 0f;
@@ -639,7 +639,7 @@ public abstract class MMUITweener : MonoBehaviour
     {
         SetCanPlayDir(false, true);
 
-        Direction = MMTweeningDirection.Reverse;
+        Direction = UITweeningDirection.Reverse;
 
         CurDuration = Duration;
         _clampedValue = 1f;

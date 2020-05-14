@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-public class MMTweenPosition : MMUITweener
+public class UITweenPosition : UITweener
 {
     public Vector3 From, To;
     public bool UseRigidbody;
@@ -40,7 +40,7 @@ public class MMTweenPosition : MMUITweener
 
     protected override void SetValue(float clampedValue)
     {
-        if(Ease == MMTweeningEaseEnum.Shake/* || Ease == MMTweeningEaseEnum.Punch*/)
+        if(Ease == UITweeningEaseEnum.Shake/* || Ease == UITweeningEaseEnum.Punch*/)
         {
             Vector2 delta = ShakePunchDirection * ShakePunchAmount * clampedValue;
 

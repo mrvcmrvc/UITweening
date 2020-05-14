@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 
-[CustomEditor(typeof(MMTweenAlpha))]
-public class MMTweenAlphaInspector : InspectorBase<MMTweenAlpha>
+[CustomEditor(typeof(UITweenColor))]
+public class UITweenColorInspector : InspectorBase<UITweenColor>
 {
     private SerializedProperty _easeProperty;
 
@@ -17,7 +17,7 @@ public class MMTweenAlphaInspector : InspectorBase<MMTweenAlpha>
 
         DrawEaseProperty();
 
-        if (_easeProperty.enumValueIndex == (int)MMTweeningEaseEnum.Curve)
+        if (_easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Curve)
             DrawAnimCurveProperty();
 
         DrawIsDelayProperty();
