@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using UITweening;
 
 public class TestScript : MonoBehaviour
 {
-    MMUITweener _tweener;
+    UITweener _tweener;
 
     void Awake()
     {
-        _tweener = gameObject.GetComponent<MMUITweener>();
+        _tweener = gameObject.GetComponent<UITweener>();
 
         Application.targetFrameRate = 120;
     }
