@@ -45,11 +45,15 @@ namespace UITweening
             if (ActiveTweenerList == null)
                 ActiveTweenerList = new List<UIVirtualValueTweener>();
 
+            tween.Play();
+
             ActiveTweenerList.Add(tween);
         }
 
         public void StopTweener(UIVirtualValueTweener tween)
         {
+            tween.Stop();
+
             _finishedTweens.Add(tween);
         }
 
