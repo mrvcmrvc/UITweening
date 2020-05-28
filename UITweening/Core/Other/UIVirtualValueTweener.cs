@@ -37,6 +37,9 @@ namespace UITweening
 
         public void UpdateValue(float clampedValue)
         {
+            if (!IsPlaying)
+                return;
+
             CurDuration += TweenInfo.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
 
             float diff = TweenInfo.To - TweenInfo.From;
