@@ -109,3 +109,160 @@ System memory in use after: 114.7 MB.
 Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1536.
 Total: 1.482795 ms (FindLiveObjects: 0.160022 ms CreateObjectMapping: 0.038953 ms MarkObjects: 1.262301 ms  DeleteObjects: 0.020288 ms)
 
+========================================================================
+Received Import Request.
+  Time since last request: 702.391841 seconds.
+  path: Assets/UITweening/UITweening/Core/Editor/com.uitweening.Editor.asmdef
+  artifactKey: Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Editor/com.uitweening.Editor.asmdef using Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7b024787c3b9a6ece92f270fb0ba30b') in 0.722358 seconds
+  Import took 0.724080 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.302092 seconds.
+  path: Assets/UITweening/com.UITweening.UITweening.asmdef
+  artifactKey: Guid(bc59c68fe1bc8644993d0dae08cea989) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/com.UITweening.UITweening.asmdef using Guid(bc59c68fe1bc8644993d0dae08cea989) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8264b4aa5e45a709d29bd8e3fdab631e') in 0.001874 seconds
+  Import took 0.003703 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.047459 seconds.
+  path: Assets/UITweening/package.json
+  artifactKey: Guid(33742c5f941b5854c8f1e011def5fb0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/package.json using Guid(33742c5f941b5854c8f1e011def5fb0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd85a9632e73badfd2e73953720cc6eb') in 0.871545 seconds
+  Import took 0.873383 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.425351 seconds.
+  path: Assets/UITweening/UITweening/Core/Other
+  artifactKey: Guid(759ec0302b4ce3745b1c00594b098f95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Other using Guid(759ec0302b4ce3745b1c00594b098f95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f4c32afb9f364b28d468b7081f013d0') in 0.001091 seconds
+  Import took 0.003042 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 26.035690 seconds.
+  path: Assets/UITweening/UITweening/Core/Editor/com.uitweening.Editor.asmdef
+  artifactKey: Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Editor/com.uitweening.Editor.asmdef using Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a70fe30d32e1a64e7b6227d63b8afa7e') in 0.003294 seconds
+  Import took 0.005120 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000239 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.17 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.721 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.11 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1088 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 123.5 MB.
+System memory in use after: 123.6 MB.
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1538.
+Total: 1.792100 ms (FindLiveObjects: 0.169628 ms CreateObjectMapping: 0.042785 ms MarkObjects: 1.561128 ms  DeleteObjects: 0.017112 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000228 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.17 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.728 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.11 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1088 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 123.8 MB.
+System memory in use after: 123.9 MB.
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1540.
+Total: 1.883993 ms (FindLiveObjects: 0.219157 ms CreateObjectMapping: 0.060127 ms MarkObjects: 1.587836 ms  DeleteObjects: 0.015025 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 38.692540 seconds.
+  path: Assets/UITweening/UITweening/Core/Runtime/com.uitweening.asmdef
+  artifactKey: Guid(0d14790cce68740f6ae353a6270a416c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Runtime/com.uitweening.asmdef using Guid(0d14790cce68740f6ae353a6270a416c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '148bdd7984fc13659eff9561182b8319') in 0.006814 seconds
+  Import took 0.008895 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001087 seconds.
+  path: Assets/UITweening/UITweening/Core/Runtime/com.uitweening.asmdef
+  artifactKey: Guid(0d14790cce68740f6ae353a6270a416c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Runtime/com.uitweening.asmdef using Guid(0d14790cce68740f6ae353a6270a416c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '148bdd7984fc13659eff9561182b8319') in 0.003406 seconds
+  Import took 0.005185 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.952961 seconds.
+  path: Assets/UITweening/UITweening/Core/Tweens
+  artifactKey: Guid(fded8642930faec45ae3ef8bb43c2323) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Tweens using Guid(fded8642930faec45ae3ef8bb43c2323) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a59ca0aae5158dc620d21cc2efaac27') in 0.001136 seconds
+  Import took 0.003085 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.957413 seconds.
+  path: Assets/UITweening/UITweening/Core/Editor
+  artifactKey: Guid(e8dac62941e1dfd4eaadf85219f1b9d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Editor using Guid(e8dac62941e1dfd4eaadf85219f1b9d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4d87424484092ff06e0260cb6c223b7') in 0.001047 seconds
+  Import took 0.002995 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.886394 seconds.
+  path: Assets/UITweening/UITweening/Core/Editor/com.uitweening.editor.asmdef
+  artifactKey: Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Editor/com.uitweening.editor.asmdef using Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30b2243cac589d44e2fcf62f54382e2b') in 0.005279 seconds
+  Import took 0.007274 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.464683 seconds.
+  path: Assets/UITweening/UITweening/Core/Editor/com.uitweening.editor.asmdef
+  artifactKey: Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UITweening/UITweening/Core/Editor/com.uitweening.editor.asmdef using Guid(295796089f9a241f89ba1d936226bd23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0b1a995f2e7efcfff1df27940e68357') in 0.003549 seconds
+  Import took 0.005547 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000226 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.17 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.717 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.14 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1088 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 124.1 MB.
+System memory in use after: 124.2 MB.
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1542.
+Total: 2.071768 ms (FindLiveObjects: 0.175947 ms CreateObjectMapping: 0.046251 ms MarkObjects: 1.826238 ms  DeleteObjects: 0.021400 ms)
+
