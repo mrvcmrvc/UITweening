@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UITweening
@@ -59,7 +60,7 @@ namespace UITweening
 
         private void Update()
         {
-            foreach (var tween in ActiveTweenerList)
+            foreach (var tween in ActiveTweenerList.ToList())
             {
                 var clampedValue = UITweeningUtilities.GetSample(
                     tween.CurDuration,

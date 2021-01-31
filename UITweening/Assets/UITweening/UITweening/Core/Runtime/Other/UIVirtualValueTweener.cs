@@ -41,6 +41,8 @@ namespace UITweening
                 return;
 
             CurDuration += TweenInfo.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
+            if (CurDuration > TweenInfo.Duration)
+                CurDuration = TweenInfo.Duration;
 
             float diff = TweenInfo.To - TweenInfo.From;
             float delta = diff * clampedValue;

@@ -12,7 +12,7 @@ namespace UITweening
 
         private RectTransform _myTransform;
         private Rigidbody _myRigidbody;
-        private Rigidbody2D _myRigidbody2D;
+        private Rigidbody2D _myRigidbody2D = null;
 
         protected override void Wake()
         {

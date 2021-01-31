@@ -1,0 +1,17 @@
+{
+    "name": "com.uitweening.editor",
+    "references": [
+        "GUID:e8f017b6b26e64a46983017683f73919"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
