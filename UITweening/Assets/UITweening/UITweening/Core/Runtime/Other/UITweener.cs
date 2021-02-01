@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace UITweening
 {
@@ -103,10 +106,7 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnKill(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onKill.Add(callback);
-            else
-                nonPersistent_onKill.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onKill : nonPersistent_onKill);
 
             return this;
         }
@@ -118,10 +118,7 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnFinish(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onFinish.Add(callback);
-            else
-                nonPersistent_onFinish.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onFinish : nonPersistent_onFinish);
 
             return this;
         }
@@ -133,10 +130,7 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnStart(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onStart.Add(callback);
-            else
-                nonPersistent_onStart.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onStart : nonPersistent_onStart);
 
             return this;
         }
@@ -148,10 +142,7 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnUpdate(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onUpdate.Add(callback);
-            else
-                nonPersistent_onUpdate.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onUpdate : nonPersistent_onUpdate);
 
             return this;
         }
@@ -163,10 +154,7 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnPause(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onPause.Add(callback);
-            else
-                nonPersistent_onPause.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onPause : nonPersistent_onPause);
 
             return this;
         }
@@ -178,10 +166,7 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnResume(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onResume.Add(callback);
-            else
-                nonPersistent_onResume.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onResume : nonPersistent_onResume);
 
             return this;
         }
@@ -193,17 +178,22 @@ namespace UITweening
         /// <returns></returns>
         public UITweener AddOnHalfWay(TweenCallback callback, bool isPersistent = true)
         {
-            if (isPersistent)
-                persistent_onHalfWay.Add(callback);
-            else
-                nonPersistent_onHalfWay.Add(callback);
+            AddCallbackToGivenCallbackList(callback, isPersistent ? persistent_onHalfWay : nonPersistent_onHalfWay);
 
             return this;
+        }
+
+        private void AddCallbackToGivenCallbackList(TweenCallback callback, List<TweenCallback> targetCallbackList)
+        {
+            if (targetCallbackList.Contains(callback))
+                return;
+            
+            targetCallbackList.Add(callback);
         }
         #endregion
 
         #region Callback Fire Functions
-        protected void FireOnKill()
+        private void FireOnKill()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onKill);
             if (cache.Count > 0)
@@ -217,7 +207,7 @@ namespace UITweening
                 persistent_onKill.ForEach(pe => pe());
         }
 
-        protected void FireOnFinish()
+        private void FireOnFinish()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onFinish);
             if (cache.Count > 0)
@@ -231,7 +221,7 @@ namespace UITweening
                 persistent_onFinish.ForEach(pe => pe());
         }
 
-        protected void FireOnStart()
+        private void FireOnStart()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onStart);
             if (cache.Count > 0)
@@ -245,7 +235,7 @@ namespace UITweening
                 persistent_onStart.ForEach(pe => pe());
         }
 
-        protected void FireOnUpdate()
+        private void FireOnUpdate()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onUpdate);
             if (cache.Count > 0)
@@ -259,7 +249,7 @@ namespace UITweening
                 persistent_onUpdate.ForEach(pe => pe());
         }
 
-        protected void FireOnPause()
+        private void FireOnPause()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onPause);
             if (cache.Count > 0)
@@ -273,7 +263,7 @@ namespace UITweening
                 persistent_onPause.ForEach(pe => pe());
         }
 
-        protected void FireOnResume()
+        private void FireOnResume()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onResume);
             if (cache.Count > 0)
@@ -287,7 +277,7 @@ namespace UITweening
                 persistent_onResume.ForEach(pe => pe());
         }
 
-        protected void FireOnHalfWay()
+        private void FireOnHalfWay()
         {
             List<TweenCallback> cache = new List<TweenCallback>(nonPersistent_onHalfWay);
             if (cache.Count > 0)
@@ -450,10 +440,17 @@ namespace UITweening
                 }
 
                 AnimationCurve animCurve = null;
-                if (Ease.Equals(UITweeningEaseEnum.Shake))
-                    animCurve = ShakeAnimationCurve;
-                else if (Ease.Equals(UITweeningEaseEnum.Curve))
-                    animCurve = CustomAnimationCurve;
+                switch (Ease)
+                {
+                    case UITweeningEaseEnum.Shake:
+                        animCurve = ShakeAnimationCurve;
+                        break;
+                    case UITweeningEaseEnum.Curve:
+                        animCurve = CustomAnimationCurve;
+                        break;
+                    default:
+                        break;
+                }
 
                 _clampedValue = UITweeningUtilities.GetSample(CurDuration, Duration, Ease, animCurve);
 
@@ -476,7 +473,7 @@ namespace UITweening
             switch (LoopType)
             {
                 case UITweeningLoopTypeEnum.Once:
-                    if ((CurDuration == 0f && Direction == UITweeningDirection.Reverse) || (CurDuration == Duration && Direction == UITweeningDirection.Forward))
+                    if ((CurDuration == 0f && Direction == UITweeningDirection.Reverse) || (CurDuration.Equals(Duration) && Direction == UITweeningDirection.Forward))
                     {
                         FinishTween();
 
@@ -485,6 +482,8 @@ namespace UITweening
                     break;
                 case UITweeningLoopTypeEnum.PingPong:
                 case UITweeningLoopTypeEnum.Loop:
+                    break;
+                default:
                     break;
             }
 
@@ -525,6 +524,8 @@ namespace UITweening
                         SetPlayingDirection(false);
                     }
                     break;
+                default:
+                    break;
             }
         }
 
@@ -557,10 +558,7 @@ namespace UITweening
         {
             SetCanPlayDir(!forward, forward);
 
-            if (forward)
-                Direction = UITweeningDirection.Forward;
-            else
-                Direction = UITweeningDirection.Reverse;
+            Direction = forward ? UITweeningDirection.Forward : UITweeningDirection.Reverse;
 
             if ((forward && CurDuration < Duration / 2f) || (!forward && CurDuration > Duration / 2f))
                 _onHalfWayFired = false;
@@ -571,10 +569,7 @@ namespace UITweening
             if (IsPaused)
                 return;
 
-            if (forward)
-                _clampedValue = 0f;
-            else
-                _clampedValue = 1f;
+            _clampedValue = forward ? 0f : 1f;
         }
 
         /// <summary>

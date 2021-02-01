@@ -3,13 +3,13 @@ using UITweening;
 
 public class TestScript : MonoBehaviour
 {
-    UITweener _tweener;
+    private UITweener _tweener;
 
-    void Awake()
+    private void Awake()
     {
         _tweener = gameObject.GetComponent<UITweener>();
 
-        Application.targetFrameRate = 120;
+        SetTargetFrameRate(60);
     }
 
     public void SetTargetFrameRate(int rate)
@@ -60,5 +60,25 @@ public class TestScript : MonoBehaviour
     public void SetTimeScaleTo(float newTimeScale)
     {
         Time.timeScale = newTimeScale;
+    }
+
+    public void RegisterToStartEvent()
+    {
+        _tweener.AddOnStart(OnTweenStarted);
+    }
+
+    public void RegisterToFinishEvent()
+    {
+        _tweener.AddOnFinish(OnTweenFinished);
+    }
+    
+    private void OnTweenStarted()
+    {
+        Debug.Log("Tween Started");
+    }
+
+    private void OnTweenFinished()
+    {
+        Debug.Log("Tween Finished");        
     }
 }

@@ -41,8 +41,7 @@ namespace UITweening
                 return;
 
             CurDuration += TweenInfo.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
-            if (CurDuration > TweenInfo.Duration)
-                CurDuration = TweenInfo.Duration;
+            CurDuration = Mathf.Min(CurDuration, TweenInfo.Duration);
 
             float diff = TweenInfo.To - TweenInfo.From;
             float delta = diff * clampedValue;
@@ -52,7 +51,7 @@ namespace UITweening
             if (TweenInfo.Callback == null)
                 Debug.LogWarning("Callback did not set");
             else
-                TweenInfo.Callback(Value, clampedValue == 1);
+                TweenInfo.Callback(Value, clampedValue.Equals(1f));
         }
     }
 }
