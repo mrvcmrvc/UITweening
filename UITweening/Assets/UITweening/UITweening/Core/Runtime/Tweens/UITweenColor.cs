@@ -12,7 +12,7 @@ namespace UITweening
 
         public Color Value { get; private set; }
 
-        Graphic myImage;
+        private Graphic myImage;
 
         protected override void Wake()
         {
@@ -23,11 +23,8 @@ namespace UITweening
 
         protected override void SetValue(float clampedValue)
         {
-            float fromH, fromS, fromV;
-            float toH, toS, toV;
-
-            Color.RGBToHSV(From, out fromH, out fromS, out fromV);
-            Color.RGBToHSV(To, out toH, out toS, out toV);
+            Color.RGBToHSV(From, out float fromH, out float fromS, out float fromV);
+            Color.RGBToHSV(To, out float toH, out float toS, out float toV);
 
             float h = CalculateHue(clampedValue, fromH, toH);
 
@@ -37,7 +34,7 @@ namespace UITweening
             Value = Color.HSVToRGB(h, s, v);
         }
 
-        float CalculateHue(float clampedValue, float from, float to)
+        private float CalculateHue(float clampedValue, float from, float to)
         {
             float diff = to - from;
             int dirSign = 1;
@@ -59,7 +56,7 @@ namespace UITweening
             return newH;
         }
 
-        float CalculateSV(float clampedValue, float from, float to)
+        private float CalculateSV(float clampedValue, float from, float to)
         {
             float diff = to - from;
             return from + (diff * clampedValue);
@@ -83,25 +80,25 @@ namespace UITweening
 
         #region ContextMenu
         [ContextMenu("Set FROM")]
-        void SetFrom()
+        private void SetFrom()
         {
             From = GetComponent<Graphic>().color;
         }
 
         [ContextMenu("Set TO")]
-        void SetTo()
+        private void SetTo()
         {
             To = GetComponent<Graphic>().color;
         }
 
         [ContextMenu("Assume FROM")]
-        void AssumeFrom()
+        private void AssumeFrom()
         {
             GetComponent<Graphic>().color = From;
         }
 
         [ContextMenu("Assume TO")]
-        void AssumeTo()
+        private void AssumeTo()
         {
             GetComponent<Graphic>().color = To;
         }

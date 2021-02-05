@@ -9,7 +9,7 @@ namespace UITweening
 
         public Vector2 Value { get; private set; }
 
-        RectTransform myTransform;
+        private RectTransform myTransform;
 
         protected override void Wake()
         {
@@ -53,25 +53,25 @@ namespace UITweening
 
         #region ContextMenu
         [ContextMenu("Set FROM")]
-        void SetFrom()
+        private void SetFrom()
         {
             From = GetComponent<RectTransform>().sizeDelta;
         }
 
         [ContextMenu("Set TO")]
-        void SetTo()
+        private void SetTo()
         {
             To = GetComponent<RectTransform>().sizeDelta;
         }
 
         [ContextMenu("Assume FROM")]
-        void AssumeFrom()
+        private void AssumeFrom()
         {
             GetComponent<RectTransform>().sizeDelta = From;
         }
 
         [ContextMenu("Assume TO")]
-        void AssumeTo()
+        private void AssumeTo()
         {
             GetComponent<RectTransform>().sizeDelta = To;
         }

@@ -60,6 +60,22 @@ namespace UITweening
 
     public abstract class UITweener : MonoBehaviour
     {
+        #region EditorProperties
+#if UNITY_EDITOR
+        public static string EditorEase => nameof(Ease); 
+        public static string EditorAnimCurve => nameof(CustomAnimationCurve); 
+        public static string EditorInitOnAwake => nameof(InitOnAwake); 
+        public static string EditorDuration => nameof(Duration); 
+        public static string EditorShakePunchAmount => nameof(ShakePunchAmount); 
+        public static string EditorShakePunchDirection => nameof(ShakePunchDirection); 
+        public static string EditorIgnoreTimeScale => nameof(IgnoreTimeScale); 
+        public static string EditorPlayAuto => nameof(PlayAutomatically); 
+        public static string EditorDelay => nameof(Delay); 
+        public static string EditorDelayDuration => nameof(DelayDuration); 
+        public static string EditorLoopType => nameof(LoopType); 
+#endif
+        #endregion
+        
         #region CommonVariables
         [HideInInspector] public UITweeningEaseEnum Ease;
         [HideInInspector] public UITweeningLoopTypeEnum LoopType;
@@ -82,8 +98,8 @@ namespace UITweening
         public UITweeningDirection Direction { get; private set; }
         public float CurDuration { get; private set; }
 
-        private float _clampedValue, _minClampedValue, _maxClampedValue, _enableTime = 0f;
-        private bool _firstEnable = true, _enabled = false, _onHalfWayFired = false;
+        private float clampedValue, minClampedValue, maxClampedValue, enableTime = 0f;
+        private bool firstEnable = true, tweenEnabled = false, onHalfWayFired = false;
         #endregion
 
         #region Events
@@ -352,8 +368,8 @@ namespace UITweening
 
             clampValues = clampValues.OrderBy(v => v).ToList();
 
-            _minClampedValue = clampValues[0];
-            _maxClampedValue = clampValues[clampValues.Count - 1];
+            minClampedValue = clampValues[0];
+            maxClampedValue = clampValues[clampValues.Count - 1];
         }
 
         public void SetEase(UITweeningEaseEnum easeType)
@@ -420,8 +436,8 @@ namespace UITweening
 
             InitClampedValue(forward);
 
-            _enabled = true;
-            _enableTime = Time.realtimeSinceStartup;
+            tweenEnabled = true;
+            enableTime = Time.realtimeSinceStartup;
 
             IsPlaying = true;
             IsPaused = false;
@@ -429,14 +445,14 @@ namespace UITweening
 
         private void Update()
         {
-            if (_enabled && !IsPaused)
+            if (tweenEnabled && !IsPaused)
             {
                 if (Delay)
                 {
-                    if (_firstEnable && Time.realtimeSinceStartup - _enableTime < DelayDuration)
+                    if (firstEnable && Time.realtimeSinceStartup - enableTime < DelayDuration)
                         return;
                     else
-                        _firstEnable = false;
+                        firstEnable = false;
                 }
 
                 AnimationCurve animCurve = null;
@@ -448,13 +464,11 @@ namespace UITweening
                     case UITweeningEaseEnum.Curve:
                         animCurve = CustomAnimationCurve;
                         break;
-                    default:
-                        break;
                 }
 
-                _clampedValue = UITweeningUtilities.GetSample(CurDuration, Duration, Ease, animCurve);
+                clampedValue = UITweeningUtilities.GetSample(CurDuration, Duration, Ease, animCurve);
 
-                SetValue(_clampedValue);
+                SetValue(clampedValue);
                 PlayAnim();
 
                 FireOnUpdate();
@@ -483,8 +497,6 @@ namespace UITweening
                 case UITweeningLoopTypeEnum.PingPong:
                 case UITweeningLoopTypeEnum.Loop:
                     break;
-                default:
-                    break;
             }
 
             return false;
@@ -499,13 +511,13 @@ namespace UITweening
                 case UITweeningLoopTypeEnum.PingPong:
                     if (CurDuration >= Duration)
                     {
-                        _clampedValue = 1f;
+                        clampedValue = 1f;
 
                         SetPlayingDirection(false);
                     }
                     else if (CurDuration <= 0f)
                     {
-                        _clampedValue = 0f;
+                        clampedValue = 0f;
 
                         SetPlayingDirection(true);
                     }
@@ -524,8 +536,6 @@ namespace UITweening
                         SetPlayingDirection(false);
                     }
                     break;
-                default:
-                    break;
             }
         }
 
@@ -533,9 +543,9 @@ namespace UITweening
         {
             CurDuration += (int)Direction * (IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime);
 
-            if (((CanPlayReverse && CurDuration > Duration / 2f) || (CanPlayForward && CurDuration < Duration / 2f)) && !_onHalfWayFired)
+            if (((CanPlayReverse && CurDuration > Duration / 2f) || (CanPlayForward && CurDuration < Duration / 2f)) && !onHalfWayFired)
             {
-                _onHalfWayFired = true;
+                onHalfWayFired = true;
                 FireOnHalfWay();
             }
 
@@ -545,8 +555,6 @@ namespace UITweening
             if (CurDuration < 0f)
                 CurDuration = 0f;
         }
-
-
 
         private void SetCanPlayDir(bool canPlayForward, bool canPlayReverse)
         {
@@ -561,7 +569,7 @@ namespace UITweening
             Direction = forward ? UITweeningDirection.Forward : UITweeningDirection.Reverse;
 
             if ((forward && CurDuration < Duration / 2f) || (!forward && CurDuration > Duration / 2f))
-                _onHalfWayFired = false;
+                onHalfWayFired = false;
         }
 
         private void InitClampedValue(bool forward)
@@ -569,7 +577,7 @@ namespace UITweening
             if (IsPaused)
                 return;
 
-            _clampedValue = forward ? 0f : 1f;
+            clampedValue = forward ? 0f : 1f;
         }
 
         /// <summary>
@@ -590,13 +598,13 @@ namespace UITweening
 
         private void CloseUpdate()
         {
-            _enabled = false;
+            tweenEnabled = false;
         }
 
         private void ResetForFirstEnable()
         {
-            _enableTime = 0f;
-            _firstEnable = true;
+            enableTime = 0f;
+            firstEnable = true;
         }
 
         /// <summary>
@@ -626,9 +634,9 @@ namespace UITweening
             Direction = UITweeningDirection.Forward;
 
             CurDuration = 0f;
-            _clampedValue = 0f;
+            clampedValue = 0f;
 
-            SetValue(_clampedValue);
+            SetValue(clampedValue);
             PlayAnim();
         }
 
@@ -639,9 +647,9 @@ namespace UITweening
             Direction = UITweeningDirection.Reverse;
 
             CurDuration = Duration;
-            _clampedValue = 1f;
+            clampedValue = 1f;
 
-            SetValue(_clampedValue);
+            SetValue(clampedValue);
             PlayAnim();
         }
 
@@ -658,5 +666,4 @@ namespace UITweening
         protected abstract void Kill();
         #endregion
     }
-
 }

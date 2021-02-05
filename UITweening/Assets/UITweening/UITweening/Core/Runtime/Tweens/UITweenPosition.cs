@@ -79,25 +79,25 @@ namespace UITweening
 
         #region ContextMenu
         [ContextMenu("Set FROM")]
-        void SetFrom()
+        private void SetFrom()
         {
             From = GetComponent<RectTransform>().anchoredPosition;
         }
 
         [ContextMenu("Set TO")]
-        void SetTo()
+        private void SetTo()
         {
             To = GetComponent<RectTransform>().anchoredPosition;
         }
 
         [ContextMenu("Assume FROM")]
-        void AssumeFrom()
+        private void AssumeFrom()
         {
             GetComponent<RectTransform>().anchoredPosition = From;
         }
 
         [ContextMenu("Assume TO")]
-        void AssumeTo()
+        private void AssumeTo()
         {
             GetComponent<RectTransform>().anchoredPosition = To;
         }

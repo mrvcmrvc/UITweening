@@ -3,11 +3,11 @@ using UITweening;
 
 public class TestScript : MonoBehaviour
 {
-    private UITweener _tweener;
+    private UITweener tweener;
 
     private void Awake()
     {
-        _tweener = gameObject.GetComponent<UITweener>();
+        tweener = gameObject.GetComponent<UITweener>();
 
         SetTargetFrameRate(60);
     }
@@ -19,42 +19,42 @@ public class TestScript : MonoBehaviour
 
     public void KillTween()
     {
-        _tweener.KillTween();
+        tweener.KillTween();
     }
 
     public void FinishTween()
     {
-        _tweener.FinishTween();
+        tweener.FinishTween();
     }
 
     public void PlayForward()
     {
-        _tweener.PlayForward();
+        tweener.PlayForward();
     }
 
     public void PlayReverse()
     {
-        _tweener.PlayReverse();
+        tweener.PlayReverse();
     }
 
     public void PauseTween()
     {
-        _tweener.PauseTween();
+        tweener.PauseTween();
     }
 
     public void ResumeTween()
     {
-        _tweener.ResumeTween();
+        tweener.ResumeTween();
     }
 
     public void InitValueToFROM()
     {
-        _tweener.InitValueToFROM();
+        tweener.InitValueToFROM();
     }
 
     public void InitValueToTO()
     {
-        _tweener.InitValueToTO();
+        tweener.InitValueToTO();
     }
 
     public void SetTimeScaleTo(float newTimeScale)
@@ -64,12 +64,12 @@ public class TestScript : MonoBehaviour
 
     public void RegisterToStartEvent()
     {
-        _tweener.AddOnStart(OnTweenStarted);
+        tweener.AddOnStart(OnTweenStarted);
     }
 
     public void RegisterToFinishEvent()
     {
-        _tweener.AddOnFinish(OnTweenFinished);
+        tweener.AddOnFinish(OnTweenFinished);
     }
     
     private void OnTweenStarted()

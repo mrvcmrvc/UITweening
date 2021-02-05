@@ -29,7 +29,7 @@ namespace UITweening
             Value = From + CalculateA(clampedValue);
         }
 
-        float CalculateA(float clampedValue)
+        private float CalculateA(float clampedValue)
         {
             float diff = To - From;
             return diff * clampedValue;
@@ -42,7 +42,7 @@ namespace UITweening
             UpdateCanvasGroup();
         }
 
-        void UpdateImage()
+        private void UpdateImage()
         {
             if (_myImage == null)
                 return;
@@ -53,7 +53,7 @@ namespace UITweening
             _myImage.color = color;
         }
 
-        void UpdateCanvasGroup()
+        private void UpdateCanvasGroup()
         {
             if (_myCanvasGroup == null)
                 return;
@@ -71,7 +71,7 @@ namespace UITweening
 
         #region ContextMenu
         [ContextMenu("Set FROM")]
-        void SetFrom()
+        private void SetFrom()
         {
             if (GetComponent<Graphic>() != null)
                 From = GetComponent<Graphic>().color.a;
@@ -80,7 +80,7 @@ namespace UITweening
         }
 
         [ContextMenu("Set TO")]
-        void SetTo()
+        private void SetTo()
         {
             if (GetComponent<Graphic>() != null)
                 To = GetComponent<Graphic>().color.a;
@@ -89,7 +89,7 @@ namespace UITweening
         }
 
         [ContextMenu("Assume FROM")]
-        void AssumeFrom()
+        private void AssumeFrom()
         {
             if (GetComponent<Graphic>() != null)
             {
@@ -103,7 +103,7 @@ namespace UITweening
         }
 
         [ContextMenu("Assume TO")]
-        void AssumeTo()
+        private void AssumeTo()
         {
             if (GetComponent<Graphic>() != null)
             {

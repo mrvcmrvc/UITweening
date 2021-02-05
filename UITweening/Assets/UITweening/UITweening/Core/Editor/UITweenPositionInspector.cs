@@ -5,17 +5,11 @@ namespace UITweening
     [CustomEditor(typeof(UITweenPosition))]
     public class UITweenPositionInspector : InspectorBase<UITweenPosition>
     {
-        private SerializedProperty _easeProperty;
-        private SerializedProperty _loopTypeProperty;
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            _easeProperty = serializedObject.FindProperty("Ease");
-            _loopTypeProperty = serializedObject.FindProperty("LoopType");
-
-            if (_easeProperty.enumValueIndex != (int)UITweeningEaseEnum.Shake)
+            if (easeProperty.enumValueIndex != (int)UITweeningEaseEnum.Shake)
             {
                 DrawDefaultInspector();
 
@@ -25,20 +19,20 @@ namespace UITweening
             {
                 DrawShakePunchAmountProperty();
 
-                _loopTypeProperty.enumValueIndex = (int)UITweeningLoopTypeEnum.PingPong;
+                loopTypeProperty.enumValueIndex = (int)UITweeningLoopTypeEnum.PingPong;
             }
 
             DrawEaseProperty();
 
-            if (_easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Curve)
+            if (easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Curve)
                 DrawAnimCurveProperty();
 
             DrawIsDelayProperty();
 
             InitOnAwakeProperty();
 
-            if (_easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Shake)
-                _myTarget.SetDuration(0.02f);
+            if (easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Shake)
+                myTarget.SetDuration(0.02f);
             else
                 DrawDurationProperty();
 

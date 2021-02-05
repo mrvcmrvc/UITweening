@@ -9,7 +9,7 @@ namespace UITweening
 
         public Vector3 Value { get; private set; }
 
-        RectTransform myTransform;
+        private RectTransform myTransform;
 
         #region implemented abstract members of UITweener
 
@@ -52,31 +52,30 @@ namespace UITweening
         protected override void Kill()
         {
         }
-
         #endregion
 
         #region ContextMenu
 
         [ContextMenu("Set FROM")]
-        void SetFrom()
+        private void SetFrom()
         {
             From = GetComponent<RectTransform>().localScale;
         }
 
         [ContextMenu("Set TO")]
-        void SetTo()
+        private void SetTo()
         {
             To = GetComponent<RectTransform>().localScale;
         }
 
         [ContextMenu("Assume FROM")]
-        void AssumeFrom()
+        private void AssumeFrom()
         {
             GetComponent<RectTransform>().localScale = From;
         }
 
         [ContextMenu("Assume TO")]
-        void AssumeTo()
+        private void AssumeTo()
         {
             GetComponent<RectTransform>().localScale = To;
         }

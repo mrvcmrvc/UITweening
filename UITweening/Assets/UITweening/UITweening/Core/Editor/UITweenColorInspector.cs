@@ -5,13 +5,9 @@ namespace UITweening
     [CustomEditor(typeof(UITweenColor))]
     public class UITweenColorInspector : InspectorBase<UITweenColor>
     {
-        private SerializedProperty _easeProperty;
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-
-            _easeProperty = serializedObject.FindProperty("Ease");
 
             DrawDefaultInspector();
 
@@ -19,7 +15,7 @@ namespace UITweening
 
             DrawEaseProperty();
 
-            if (_easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Curve)
+            if (easeProperty.enumValueIndex == (int)UITweeningEaseEnum.Curve)
                 DrawAnimCurveProperty();
 
             DrawIsDelayProperty();

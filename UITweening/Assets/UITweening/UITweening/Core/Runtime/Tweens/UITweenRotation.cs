@@ -9,7 +9,7 @@ namespace UITweening
 
         public Quaternion Value { get; private set; }
 
-        RectTransform myTransform;
+        private RectTransform myTransform;
 
         protected override void Wake()
         {
@@ -58,25 +58,25 @@ namespace UITweening
         #region ContextMenu
 
         [ContextMenu("Set FROM")]
-        void SetFrom()
+        private void SetFrom()
         {
             From = GetComponent<RectTransform>().localEulerAngles;
         }
 
         [ContextMenu("Set TO")]
-        void SetTo()
+        private void SetTo()
         {
             To = GetComponent<RectTransform>().localEulerAngles;
         }
 
         [ContextMenu("Assume FROM")]
-        void AssumeFrom()
+        private void AssumeFrom()
         {
             GetComponent<RectTransform>().localEulerAngles = From;
         }
 
         [ContextMenu("Assume TO")]
-        void AssumeTo()
+        private void AssumeTo()
         {
             GetComponent<RectTransform>().localEulerAngles = To;
         }
@@ -94,7 +94,6 @@ namespace UITweening
 
             base.InitValueToTO();
         }
-
         #endregion
     }
 }

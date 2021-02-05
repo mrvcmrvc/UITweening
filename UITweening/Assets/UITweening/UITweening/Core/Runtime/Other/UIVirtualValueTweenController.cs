@@ -6,39 +6,39 @@ namespace UITweening
 {
     public class UIVirtualValueTweenController : MonoBehaviour
     {
-        private static UIVirtualValueTweenController _instance;
+        private static UIVirtualValueTweenController instance;
         public static UIVirtualValueTweenController Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = FindObjectOfType<UIVirtualValueTweenController>();
+                if (instance == null)
+                    instance = FindObjectOfType<UIVirtualValueTweenController>();
 
-                return _instance;
+                return instance;
             }
         }
 
         public List<UIVirtualValueTweener> ActiveTweenerList { get; private set; }
 
-        private List<UIVirtualValueTweener> _finishedTweens = new List<UIVirtualValueTweener>();
+        private List<UIVirtualValueTweener> finishedTweens = new List<UIVirtualValueTweener>();
 
         private void Awake()
         {
-            if (_instance == null)
-                _instance = this;
+            if (instance == null)
+                instance = this;
 
             if (ActiveTweenerList == null)
                 ActiveTweenerList = new List<UIVirtualValueTweener>();
 
-            _finishedTweens = new List<UIVirtualValueTweener>();
+            finishedTweens = new List<UIVirtualValueTweener>();
         }
 
         private void OnDestroy()
         {
-            _instance = null;
+            instance = null;
 
             ActiveTweenerList = null;
-            _finishedTweens = null;
+            finishedTweens = null;
         }
 
         public void StartTweener(UIVirtualValueTweener tween)
@@ -55,7 +55,7 @@ namespace UITweening
         {
             tween.Stop();
 
-            _finishedTweens.Add(tween);
+            finishedTweens.Add(tween);
         }
 
         private void Update()
@@ -69,20 +69,20 @@ namespace UITweening
 
                 tween.UpdateValue(clampedValue);
 
-                if (clampedValue == 1 && !_finishedTweens.Contains(tween))
-                    _finishedTweens.Add(tween);
+                if (clampedValue == 1 && !finishedTweens.Contains(tween))
+                    finishedTweens.Add(tween);
             }
         }
 
         private void LateUpdate()
         {
-            if (_finishedTweens.Count == 0)
+            if (finishedTweens.Count == 0)
                 return;
 
-            foreach (var finishedTween in _finishedTweens)
+            foreach (var finishedTween in finishedTweens)
                 ActiveTweenerList.Remove(finishedTween);
 
-            _finishedTweens.Clear();
+            finishedTweens.Clear();
         }
     }
 }

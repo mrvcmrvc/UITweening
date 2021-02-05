@@ -2,92 +2,93 @@
 
 namespace UITweening
 {
-    public class InspectorBase<T> : Editor where
+    public abstract class InspectorBase<T> : Editor where
         T : UITweener
     {
-        private SerializedProperty _easeProperty;
-        private SerializedProperty _animCurveProperty;
-        private SerializedProperty _initOnAwakeProperty;
-        private SerializedProperty _durationProperty;
-        private SerializedProperty _shakePunchAmountProperty;
-        private SerializedProperty _shakePunchDirectionProperty;
-        private SerializedProperty _ignoreTimeScaleProperty;
-        private SerializedProperty _playAutoProperty;
-        private SerializedProperty _delayProperty;
-        private SerializedProperty _delayDurationProperty;
-        private SerializedProperty _loopTypeProperty;
+        protected SerializedProperty easeProperty;
+        protected SerializedProperty animCurveProperty;
+        protected SerializedProperty initOnAwakeProperty;
+        protected SerializedProperty durationProperty;
+        protected SerializedProperty shakePunchAmountProperty;
+        protected SerializedProperty shakePunchDirectionProperty;
+        protected SerializedProperty ignoreTimeScaleProperty;
+        protected SerializedProperty playAutoProperty;
+        protected SerializedProperty delayProperty;
+        protected SerializedProperty delayDurationProperty;
+        protected SerializedProperty loopTypeProperty;
 
-        protected T _myTarget;
+        protected T myTarget;
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
-            _myTarget = (T)target;
+            myTarget = (T)target;
+            
+            easeProperty = serializedObject.FindProperty(UITweener.EditorEase);
+            animCurveProperty = serializedObject.FindProperty(UITweener.EditorAnimCurve);
+            initOnAwakeProperty = serializedObject.FindProperty(UITweener.EditorInitOnAwake);
+            durationProperty = serializedObject.FindProperty(UITweener.EditorDuration);
+            shakePunchAmountProperty = serializedObject.FindProperty(UITweener.EditorShakePunchAmount);
+            shakePunchDirectionProperty = serializedObject.FindProperty(UITweener.EditorShakePunchDirection);
+            ignoreTimeScaleProperty = serializedObject.FindProperty(UITweener.EditorIgnoreTimeScale);
+            playAutoProperty = serializedObject.FindProperty(UITweener.EditorPlayAuto);
+            delayProperty = serializedObject.FindProperty(UITweener.EditorDelay);
+            delayDurationProperty = serializedObject.FindProperty(UITweener.EditorDelayDuration);
+            loopTypeProperty = serializedObject.FindProperty(UITweener.EditorLoopType);
         }
 
         protected void DrawEaseProperty()
         {
-            _easeProperty = serializedObject.FindProperty("Ease");
-            EditorGUILayout.PropertyField(_easeProperty, false);
+            EditorGUILayout.PropertyField(easeProperty, false);
         }
 
         protected void DrawAnimCurveProperty()
         {
-            _animCurveProperty = serializedObject.FindProperty("CustomAnimationCurve");
-            EditorGUILayout.PropertyField(_animCurveProperty, false);
+            EditorGUILayout.PropertyField(animCurveProperty, false);
         }
 
         protected void InitOnAwakeProperty()
         {
-            _initOnAwakeProperty = serializedObject.FindProperty("InitOnAwake");
-            EditorGUILayout.PropertyField(_initOnAwakeProperty, false);
+            EditorGUILayout.PropertyField(initOnAwakeProperty, false);
         }
 
         protected void DrawDurationProperty()
         {
-            _durationProperty = serializedObject.FindProperty("Duration");
-            EditorGUILayout.PropertyField(_durationProperty, false);
+            EditorGUILayout.PropertyField(durationProperty, false);
         }
 
         protected void DrawShakePunchAmountProperty()
         {
-            _shakePunchAmountProperty = serializedObject.FindProperty("ShakePunchAmount");
-            EditorGUILayout.PropertyField(_shakePunchAmountProperty, false);
+            EditorGUILayout.PropertyField(shakePunchAmountProperty, false);
 
-            _shakePunchDirectionProperty = serializedObject.FindProperty("ShakePunchDirection");
-            EditorGUILayout.PropertyField(_shakePunchDirectionProperty, false);
+            EditorGUILayout.PropertyField(shakePunchDirectionProperty, false);
         }
 
         protected void DrawIgnoreTimeScaleProperty()
         {
-            _ignoreTimeScaleProperty = serializedObject.FindProperty("IgnoreTimeScale");
-            EditorGUILayout.PropertyField(_ignoreTimeScaleProperty, false);
+            EditorGUILayout.PropertyField(ignoreTimeScaleProperty, false);
         }
 
         protected void DrawPlayAutomaticallyProperty()
         {
-            _playAutoProperty = serializedObject.FindProperty("PlayAutomatically");
-            EditorGUILayout.PropertyField(_playAutoProperty, false);
+            EditorGUILayout.PropertyField(playAutoProperty, false);
         }
 
         protected void DrawIsDelayProperty()
         {
-            _delayProperty = serializedObject.FindProperty("Delay");
-            EditorGUILayout.PropertyField(_delayProperty, false);
+            EditorGUILayout.PropertyField(delayProperty, false);
 
-            if (_myTarget.Delay)
+            if (myTarget.Delay)
                 DrawDelayDurationProperty();
         }
 
         protected void DrawDelayDurationProperty()
         {
-            _delayDurationProperty = serializedObject.FindProperty("DelayDuration");
-            EditorGUILayout.PropertyField(_delayDurationProperty, false);
+            EditorGUILayout.PropertyField(delayDurationProperty, false);
         }
 
         protected void DrawLoopTypeProperty()
         {
-            _loopTypeProperty = serializedObject.FindProperty("LoopType");
-            EditorGUILayout.PropertyField(_loopTypeProperty, false);
+            EditorGUILayout.PropertyField(loopTypeProperty, false);
         }
     }
 }
